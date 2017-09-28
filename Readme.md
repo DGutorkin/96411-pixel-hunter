@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dmitry Gutorkin](https://up.htmlacademy.ru/ecmascript/3/user/96411).
-* Наставник: `Неизвестно`.
+* Наставник: `Владимир Коршунов`.
 
 ---
 
