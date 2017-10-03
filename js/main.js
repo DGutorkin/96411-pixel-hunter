@@ -23,7 +23,7 @@ function showScreen(screenIndex) {
     while (screenContainer.childNodes.length > 0) {
       screenContainer.removeChild(screenContainer.firstChild);
     }
-    screenContainer.append(
+    screenContainer.appendChild(
         document.importNode(screens[screenIndex].content, true)
     );
     currentIndex = screenIndex;
