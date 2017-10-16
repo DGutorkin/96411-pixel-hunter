@@ -1,3 +1,10 @@
+/** @function
+* @param {Array} answers - массив объектов с ответами пользователя
+* У объекта 2 аттрибута success и time - результат ответа и потраченное время
+* @param {number} lives - количество оставшихся жизней
+* @return количество баллов или -1, если игра провалена
+*/
+
 export default (answers, lives) => {
   if (answers.length === 10) {
     let score = answers.reduce((sum, answer) => {
