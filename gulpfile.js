@@ -107,6 +107,11 @@ gulp.task('serve', ['assemble'], function () {
   gulp.watch('js/**/*.js', ['js-watch']);
 });
 
+gulp.task('tests.watch', function() {
+  gulp.watch('js/*.test.js', ['test']);
+});
+
+
 gulp.task('assemble', ['clean'], function () {
   gulp.start('copy', 'style');
 });
