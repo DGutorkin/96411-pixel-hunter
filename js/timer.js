@@ -8,7 +8,7 @@ const getTimer = (value) => {
   return {
     value,
     tick() {
-      return this.value < 1 ? this : getTimer(this.value - 1);
+      return this.value < 1 ? getTimer(0) : getTimer(this.value - 1);
     },
     isFinished() {
       return this.value < 1;

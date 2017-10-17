@@ -17,7 +17,4 @@ describe(`Timer`, () => {
   it(`1-second timer becomes finished after 1 tick`, () => {
     assert(getTimer(1).tick().isFinished());
   });
-  it(`Two ticks decrease timer value by 2`, () => {
-    assert.equal(getTimer(10).tick().tick().value, 8);
-  });
 });
