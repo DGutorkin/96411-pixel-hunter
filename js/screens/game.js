@@ -82,7 +82,7 @@ export default (data) => {
 
   let template = getTemplate(`
     <p class="game__task">${templates[data.length].task}</p>
-    ${templates[data.length].task}
+    ${templates[data.length].content}
   `, `div`, [`game`]);
 
   // проставляем листенеры
