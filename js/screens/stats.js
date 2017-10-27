@@ -104,6 +104,6 @@ const template = getTemplate(`
   </div>
 `);
 
-template.insertBefore(getHeader({}), template.firstChild);
+template.insertBefore(getHeader(), template.firstChild);
 
 export default template;

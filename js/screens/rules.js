@@ -22,7 +22,7 @@ const template = getTemplate(`
 `);
 
 // тут конечно еще пойдет .insertAdjacentElement('afterbegin', element)
-template.insertBefore(getHeader({}), template.firstChild);
+template.insertBefore(getHeader(), template.firstChild);
 
 const rulesInput = template.querySelector(`.rules__input`);
 const rulesButton = template.querySelector(`.rules__button`);
