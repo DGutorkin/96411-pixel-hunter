@@ -1,15 +1,7 @@
 import getTemplate from '../template';
-import showScreen from '../screen';
+import getHeader from './header';
 
 const template = getTemplate(`
-  <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-  </header>
   <div class="result">
     <h1>Победа!</h1>
     <table class="result__table">
@@ -112,8 +104,6 @@ const template = getTemplate(`
   </div>
 `);
 
-const backButton = template.querySelector(`.back`);
-
-backButton.addEventListener(`click`, () => showScreen(`greeting`));
+template.insertBefore(getHeader({}), template.firstChild);
 
 export default template;

@@ -1,15 +1,8 @@
 import getTemplate from '../template';
 import showScreen from '../screen';
+import getHeader from './header';
 
 const template = getTemplate(`
-  <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-  </header>
   <div class="rules">
     <h1 class="rules__title">Правила</h1>
     <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
@@ -28,11 +21,11 @@ const template = getTemplate(`
   </div>
 `);
 
-const backButton = template.querySelector(`.back`);
+// тут конечно еще пойдет .insertAdjacentElement('afterbegin', element)
+template.insertBefore(getHeader({}), template.firstChild);
+
 const rulesInput = template.querySelector(`.rules__input`);
 const rulesButton = template.querySelector(`.rules__button`);
-
-backButton.addEventListener(`click`, () => showScreen(`greeting`));
 
 /**
 * Вроде как disabled-кнопки на формах - это антипаттерн.
