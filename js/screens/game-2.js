@@ -35,7 +35,7 @@ const template = getTemplate(`
   </div>
 `);
 
-template.insertBefore(getHeader(), template.firstChild);
+template.insertBefore(getHeader({timer: `NN`, lives: 2}), template.firstChild);
 
 // Строго следуем ТЗ. Формально правильнее проверять input на change, а не label на click
 [...template.querySelectorAll(`.game__answer`)].forEach((label) => {

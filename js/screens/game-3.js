@@ -33,7 +33,7 @@ const template = getTemplate(`
   </div>
 `);
 
-template.insertBefore(getHeader(), template.firstChild);
+template.insertBefore(getHeader({timer: `NN`, lives: 2}), template.firstChild);
 
 [...template.querySelectorAll(`.game__option`)].forEach((option) => {
   option.addEventListener(`click`, () => showScreen(`stats`));
