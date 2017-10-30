@@ -28,7 +28,7 @@ export default (state) => {
    `;
   }
 
-  // совмещаем разметку обоих хедеров внутри элемента header.header
+  // помещаем получившуюся разметку внутри элемента header.header
   const header = getTemplate(headerTemplate, `header`, [`header`]);
 
   header.querySelector(`.back`).addEventListener(`click`, () => showScreen(`greeting`));

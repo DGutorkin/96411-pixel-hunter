@@ -43,7 +43,7 @@ rulesInput.addEventListener(`keyup`, () => {
 */
 rulesButton.addEventListener(`click`, (evt) => {
   evt.preventDefault();
-  showScreen(`game1`);
+  showScreen(`game`);
 });
 
 
