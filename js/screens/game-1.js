@@ -21,7 +21,8 @@ export default (state) => {
     action: (template) => {
       // Строго следуем ТЗ. Формально правильнее проверять input на change, а не label на click
       [...template.querySelectorAll(`.game__answer`)].forEach((label) => {
-        label.addEventListener(`click`, () => {
+        label.addEventListener(`click`, (evt) => {
+          evt.preventDefault();
           state.position++;
           console.log(state);
           showScreen(`game`);
