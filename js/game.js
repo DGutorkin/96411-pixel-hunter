@@ -3,6 +3,7 @@ import getHeader from './screens/header';
 import game1 from './screens/game-1';
 import game2 from './screens/game-2';
 import game3 from './screens/game-3';
+import showScreen from './screen';
 
 
 // сохраняем разметку и eventListeners для каждого типа игры в объект games
@@ -28,7 +29,7 @@ const fetchData = () => {
   // meme "И так сойдет"
   let sourceMap = new Map();
   [...source.paintings, ...source.photos].forEach((url, i) => {
-    sourceMap.set(url, i < 3 ? `painting` : `photo`);
+    sourceMap.set(url, i < 3 ? `paint` : `photo`);
   });
 
   let data = [];
@@ -57,7 +58,18 @@ let state = {
   data: fetchData()
 };
 
-const runGame = () => {
+const userAnswered = (answer) => {
+  state.answers[state.position] = answer;
+  state.position++;
+  if (state.position < 10) {
+    showScreen(`game`);
+  } else {
+    showScreen(`stats`);
+  }
+};
+
+
+export default () => {
   // Определяем тип текущей игры, на основании количества картинок в текущем step
   let step = state.data[state.position];
   let game = games[`game` + step.size](state);
@@ -74,11 +86,9 @@ const runGame = () => {
   `, `div`, [`game`]);
 
   // проставляем листенеры, в зависимости от типа игры
-  game.action(template);
+  game.action(template, userAnswered);
 
   // апдейтим хедер
   template.insertBefore(getHeader(state), template.firstChild);
   return template;
 };
-
-export default runGame;

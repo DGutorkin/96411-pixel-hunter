@@ -1,5 +1,3 @@
-import showScreen from '../screen';
-
 export default (state) => {
   let step = state.data[state.position];
   return {
@@ -12,13 +10,11 @@ export default (state) => {
         </div>
       `).join(``)}
     </form> `,
-    action: (template) => {
+    action: (template, cb) => {
       [...template.querySelectorAll(`.game__option`)].forEach((option) => {
         option.addEventListener(`click`, () => {
-          state.position++;
-          console.log(state);
-          showScreen(`game`);
-        })
+          cb(`wrong`);
+        });
       });
     }
   };

@@ -1,5 +1,3 @@
-import showScreen from '../screen';
-
 export default (state) => {
   let step = state.data[state.position];
   return {
@@ -20,19 +18,14 @@ export default (state) => {
         </div>
        `).join(``)}
     </form>`,
-    action: (template) => {
+    action: (template, cb) => {
       const radioButtons = [...template.querySelectorAll(`input[type=radio]`)];
       radioButtons.forEach((radio) => {
         radio.addEventListener(`change`, () => {
           // альтернативно можно [...template.querySelectorAll(`.game__option input[type=radio]:checked`)]
           // но мне кажется итерация по готовому массиву будет быстрее
           if (radioButtons.filter((checkedRadio) => checkedRadio.checked).length === 2) {
-            state.position++;
-            console.log(state);
-            showScreen(`game`);
-            // state.position++;
-            // console.log('state: ', state);
-            // showScreen(`game`);
+            cb(`wrong`);
           }
         });
       });

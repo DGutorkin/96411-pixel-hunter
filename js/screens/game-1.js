@@ -1,5 +1,3 @@
-import showScreen from '../screen';
-
 export default (state) => {
   let step = state.data[state.position];
   return {
@@ -18,14 +16,14 @@ export default (state) => {
           </label>
         </div>
       </form>`,
-    action: (template) => {
+    action: (template, cb) => {
       // Строго следуем ТЗ. Формально правильнее проверять input на change, а не label на click
       [...template.querySelectorAll(`.game__answer`)].forEach((label) => {
         label.addEventListener(`click`, (evt) => {
           evt.preventDefault();
-          state.position++;
-          console.log(state);
-          showScreen(`game`);
+          let choice = evt.currentTarget.querySelector(`input`).value;
+          let answer = choice === step.values().next().value ? `correct` : `wrong`;
+          cb(answer);
         });
       });
     }
