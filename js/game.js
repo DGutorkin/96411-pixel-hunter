@@ -61,12 +61,16 @@ let state = {
 
 const userAnswered = (result) => {
   state.answers[state.position] = result;
+  if (result === `wrong`) {
+    state.lives--;
+  }
   state.position++;
-  if (state.position < 10) {
+  if (state.lives > 0 && state.position < 10) {
     showScreen(`game`);
   } else {
     showScreen(`stats`);
   }
+
 };
 
 
