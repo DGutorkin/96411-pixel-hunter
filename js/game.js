@@ -56,7 +56,18 @@ let state = {
   lives: 3,
   position: 0,
   answers: new Array(10).fill(`unknown`),
-  data: fetchData()
+  data: fetchData(),
+  history: []
+};
+
+const resetState = () => {
+  state.history.push({
+    lives: state.lives,
+    answers: [...state.answers]
+  });
+  state.lives = 3;
+  state.position = 0;
+  state.answers = new Array(10).fill(`unknown`);
 };
 
 const userAnswered = (result) => {
@@ -65,9 +76,10 @@ const userAnswered = (result) => {
     state.lives--;
   }
   state.position++;
-  if (state.lives > 0 && state.position < 10) {
+  if (state.lives >= 0 && state.position < 10) {
     showScreen(`game`);
   } else {
+    resetState();
     showScreen(`stats`);
   }
 
