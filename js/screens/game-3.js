@@ -1,4 +1,7 @@
-export default (step) => {
+import showScreen from '../screen';
+
+export default (state) => {
+  let step = state.data[state.position];
   return {
     task: `Найдите рисунок среди изображений`,
     content: `
@@ -12,8 +15,10 @@ export default (step) => {
     action: (template) => {
       [...template.querySelectorAll(`.game__option`)].forEach((option) => {
         option.addEventListener(`click`, () => {
-          console.info(`следующая порция данных`);
-        });
+          state.position++;
+          console.log(state);
+          showScreen(`game`);
+        })
       });
     }
   };

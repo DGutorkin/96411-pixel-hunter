@@ -1,4 +1,7 @@
-export default (step) => {
+import showScreen from '../screen';
+
+export default (state) => {
+  let step = state.data[state.position];
   return {
     task: `Угадай, фото или рисунок?`,
     content: `
@@ -19,7 +22,9 @@ export default (step) => {
       // Строго следуем ТЗ. Формально правильнее проверять input на change, а не label на click
       [...template.querySelectorAll(`.game__answer`)].forEach((label) => {
         label.addEventListener(`click`, () => {
-          console.info(`следующая порция данных`);
+          state.position++;
+          console.log(state);
+          showScreen(`game`);
         });
       });
     }

@@ -4,6 +4,7 @@ import game1 from './screens/game-1';
 import game2 from './screens/game-2';
 import game3 from './screens/game-3';
 
+
 // сохраняем разметку и eventListeners для каждого типа игры в объект games
 const games = {game1, game2, game3};
 
@@ -48,7 +49,7 @@ const fetchData = () => {
   return data;
 };
 
-const initialState = {
+let state = {
   timer: `NN`,
   lives: 3,
   position: 0,
@@ -56,11 +57,10 @@ const initialState = {
   data: fetchData()
 };
 
-
-const runGame = (state = initialState) => {
+const runGame = () => {
   // Определяем тип текущей игры, на основании количества картинок в текущем step
   let step = state.data[state.position];
-  let game = games[`game` + step.size](step);
+  let game = games[`game` + step.size](state);
 
   // получаем HTML-элемент, на который будем дальше вешать eventListeners
   let template = getTemplate(`
@@ -81,4 +81,4 @@ const runGame = (state = initialState) => {
   return template;
 };
 
-export default runGame();
+export default runGame;

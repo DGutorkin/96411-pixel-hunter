@@ -1,4 +1,7 @@
-export default (step) => {
+import showScreen from '../screen';
+
+export default (state) => {
+  let step = state.data[state.position];
   return {
     task: `Угадайте для каждого изображения фото или рисунок?`,
     content: `
@@ -24,7 +27,12 @@ export default (step) => {
           // альтернативно можно [...template.querySelectorAll(`.game__option input[type=radio]:checked`)]
           // но мне кажется итерация по готовому массиву будет быстрее
           if (radioButtons.filter((checkedRadio) => checkedRadio.checked).length === 2) {
-            console.info(`следующая порция данных`);
+            state.position++;
+            console.log(state);
+            showScreen(`game`);
+            // state.position++;
+            // console.log('state: ', state);
+            // showScreen(`game`);
           }
         });
       });

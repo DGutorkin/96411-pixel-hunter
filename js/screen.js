@@ -12,5 +12,6 @@ export default (screen) => {
   while (screenContainer.firstChild) {
     screenContainer.removeChild(screenContainer.firstChild);
   }
-  screenContainer.appendChild(screens[screen]);
+  let template = screen === `game` ? screens[screen]() : screens[screen];
+  screenContainer.appendChild(template);
 };
