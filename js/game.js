@@ -40,6 +40,7 @@ const fetchData = () => {
     let gameType = Math.floor(Math.random() * 3) + 1;
     // заполняем шаг уникальными изображениями:
     // map не позволит создать второй одинаковый ключ
+    // TODO: для game-3 надо процессить изображения, чтоб был хоть 1 paint в подборке
     for (let j = 0; j < gameType; j++) {
       let randomIndex = Math.floor(Math.random() * sourceMap.size);
       let randomURL = [...sourceMap.keys()][randomIndex];
@@ -58,8 +59,8 @@ let state = {
   data: fetchData()
 };
 
-const userAnswered = (answer) => {
-  state.answers[state.position] = answer;
+const userAnswered = (result) => {
+  state.answers[state.position] = result;
   state.position++;
   if (state.position < 10) {
     showScreen(`game`);

@@ -1,3 +1,9 @@
+const processAnswer = (evt, step) => {
+  evt.preventDefault();
+  let url = evt.target.querySelector(`img`).src;
+  return step.get(url) === `paint` ? `correct` : `wrong`;
+};
+
 export default (state) => {
   let step = state.data[state.position];
   return {
@@ -12,8 +18,9 @@ export default (state) => {
     </form> `,
     action: (template, cb) => {
       [...template.querySelectorAll(`.game__option`)].forEach((option) => {
-        option.addEventListener(`click`, () => {
-          cb(`wrong`);
+        option.addEventListener(`click`, (evt) => {
+          let result = processAnswer(evt, step);
+          cb(result);
         });
       });
     }

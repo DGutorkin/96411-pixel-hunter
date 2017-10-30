@@ -1,3 +1,9 @@
+const processAnswer = (evt, step) => {
+  evt.preventDefault();
+  let choice = evt.currentTarget.querySelector(`input`).value;
+  return choice === step.values().next().value ? `correct` : `wrong`;
+};
+
 export default (state) => {
   let step = state.data[state.position];
   return {
@@ -20,10 +26,8 @@ export default (state) => {
       // Строго следуем ТЗ. Формально правильнее проверять input на change, а не label на click
       [...template.querySelectorAll(`.game__answer`)].forEach((label) => {
         label.addEventListener(`click`, (evt) => {
-          evt.preventDefault();
-          let choice = evt.currentTarget.querySelector(`input`).value;
-          let answer = choice === step.values().next().value ? `correct` : `wrong`;
-          cb(answer);
+          let result = processAnswer(evt, step);
+          cb(result);
         });
       });
     }

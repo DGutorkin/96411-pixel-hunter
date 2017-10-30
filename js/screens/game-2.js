@@ -1,3 +1,11 @@
+const processAnswer = (checkedBtns, step) => {
+  let results = checkedBtns.map((btn) => {
+    let url = btn.closest(`.game__option`).querySelector(`img`).src;
+    return step.get(url) === btn.value ? 1 : 0;
+  });
+  return results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
+};
+
 export default (state) => {
   let step = state.data[state.position];
   return {
@@ -22,10 +30,10 @@ export default (state) => {
       const radioButtons = [...template.querySelectorAll(`input[type=radio]`)];
       radioButtons.forEach((radio) => {
         radio.addEventListener(`change`, () => {
-          // альтернативно можно [...template.querySelectorAll(`.game__option input[type=radio]:checked`)]
-          // но мне кажется итерация по готовому массиву будет быстрее
-          if (radioButtons.filter((checkedRadio) => checkedRadio.checked).length === 2) {
-            cb(`wrong`);
+          let checkedBtns = [...template.querySelectorAll(`input[type=radio]:checked`)];
+          if (checkedBtns.length === 2) {
+            let result = processAnswer(checkedBtns, step);
+            cb(result);
           }
         });
       });
