@@ -1,6 +1,7 @@
 import getTemplate from '../template';
 import showScreen from '../screen';
 import getHeader from './header';
+import getGame from '../game';
 
 const template = getTemplate(`
   <div class="rules">
@@ -43,7 +44,7 @@ rulesInput.addEventListener(`keyup`, () => {
 */
 rulesButton.addEventListener(`click`, (evt) => {
   evt.preventDefault();
-  showScreen(`game`);
+  showScreen(getGame());
 });
 
 

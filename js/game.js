@@ -3,8 +3,8 @@ import getHeader from './screens/header';
 import game1 from './screens/game-1';
 import game2 from './screens/game-2';
 import game3 from './screens/game-3';
+import getStats from './screens/stats';
 import showScreen from './screen';
-
 
 // сохраняем разметку и eventListeners для каждого типа игры в объект games
 const games = {game1, game2, game3};
@@ -77,16 +77,16 @@ const userAnswered = (result) => {
   }
   state.position++;
   if (state.lives >= 0 && state.position < 10) {
-    showScreen(`game`);
+    showScreen(getGame());
   } else {
     resetState();
-    showScreen(`stats`);
+    showScreen(getStats(state));
   }
 
 };
 
 
-export default () => {
+const getGame = () => {
   // Определяем тип текущей игры, на основании количества картинок в текущем step
   let step = state.data[state.position];
   let game = games[`game` + step.size](state);
@@ -109,3 +109,5 @@ export default () => {
   template.insertBefore(getHeader(state), template.firstChild);
   return template;
 };
+
+export default getGame;
