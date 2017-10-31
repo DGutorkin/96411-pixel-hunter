@@ -15,7 +15,7 @@ export default (state) => {
               </ul>
             </td>
             <td class="result__points">×&nbsp;100</td>
-            <td class="result__total">${game.lives > 0 ?
+            <td class="result__total">${game.lives > -1 ?
     game.answers.filter((answer) => answer === `correct`).length * 100 :
     `FAIL`}</td>
           </tr>
@@ -29,7 +29,7 @@ export default (state) => {
             </tr>
           ` : ``}
           <tr>
-            <td colspan="5" class="result__total  result__total--final">${ game.lives > 0 ? (game.answers.filter((answer) => answer === `correct`).length * 100) + game.lives * 50 : ``}</td>
+            <td colspan="5" class="result__total  result__total--final">${ game.lives > -1 ? (game.answers.filter((answer) => answer === `correct`).length * 100) + game.lives * 50 : ``}</td>
           </tr>
         </table>
       `).join(`\n`)}
