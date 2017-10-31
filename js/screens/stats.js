@@ -5,7 +5,7 @@ export default (state) => {
   const template = getTemplate(`
     <div class="result">
       <h1>Победа!</h1>
-      ${state.history.map((game, i) => `
+      ${state.history.reverse().map((game, i) => `
         <table class="result__table">
           <tr>
             <td class="result__number">${i + 1}.</td>
