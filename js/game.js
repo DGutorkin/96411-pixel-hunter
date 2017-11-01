@@ -1,4 +1,3 @@
-import getTemplate from './template';
 import getHeader from './screens/header';
 import game1 from './screens/game-1';
 import game2 from './screens/game-2';
@@ -89,25 +88,13 @@ const userAnswered = (result) => {
 const getGame = () => {
   // Определяем тип текущей игры, на основании количества картинок в текущем step
   let step = state.data[state.position];
-  let game = games[`game` + step.size](state);
 
-  // получаем HTML-элемент, на который будем дальше вешать eventListeners
-  let template = getTemplate(`
-    <p class="game__task">${game.task}</p>
-    ${game.content}
-    <div class="stats">
-      <ul class="stats">
-        ${state.answers.map((answer) => `<li class="stats__result stats__result--${answer}"></li>`).join(`\n`)}
-      </ul>
-    </div>
-  `, `div`, [`game`]);
-
-  // проставляем листенеры, в зависимости от типа игры
-  game.action(template, userAnswered);
+  // получаем HTML-элемент, соответствующий текущей игре.
+  let game = games[`game` + step.size](state, userAnswered);
 
   // апдейтим хедер
-  template.insertBefore(getHeader(state), template.firstChild);
-  return template;
+  game.insertBefore(getHeader(state), game.firstChild);
+  return game;
 };
 
 export default getGame;

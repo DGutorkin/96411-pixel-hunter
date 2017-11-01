@@ -1,3 +1,5 @@
+import getTemplate from '../template';
+
 const processAnswer = (checkedBtns, step) => {
   let results = checkedBtns.map((btn) => {
     let url = btn.closest(`.game__option`).querySelector(`img`).src;
@@ -6,11 +8,10 @@ const processAnswer = (checkedBtns, step) => {
   return results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
 };
 
-export default (state) => {
+export default (state, cb) => {
   let step = state.data[state.position];
-  return {
-    task: `Угадайте для каждого изображения фото или рисунок?`,
-    content: `
+  let template = getTemplate(`
+    <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
       ${[...step.keys()].map((pic, i) => `
         <div class="game__option">
@@ -25,18 +26,23 @@ export default (state) => {
           </label>
         </div>
        `).join(``)}
-    </form>`,
-    action: (template, cb) => {
-      const radioButtons = [...template.querySelectorAll(`input[type=radio]`)];
-      radioButtons.forEach((radio) => {
-        radio.addEventListener(`change`, () => {
-          let checkedBtns = [...template.querySelectorAll(`input[type=radio]:checked`)];
-          if (checkedBtns.length === 2) {
-            let result = processAnswer(checkedBtns, step);
-            cb(result);
-          }
-        });
-      });
-    }
-  };
+    </form>
+    <div class="stats">
+      <ul class="stats">
+        ${state.answers.map((answer) => `<li class="stats__result stats__result--${answer}"></li>`).join(`\n`)}
+      </ul>
+    </div>`, `div`, [`game`]);
+
+  const radioButtons = [...template.querySelectorAll(`input[type=radio]`)];
+  radioButtons.forEach((radio) => {
+    radio.addEventListener(`change`, () => {
+      let checkedBtns = [...template.querySelectorAll(`input[type=radio]:checked`)];
+      if (checkedBtns.length === 2) {
+        let result = processAnswer(checkedBtns, step);
+        cb(result);
+      }
+    });
+  });
+
+  return template;
 };
