@@ -1,71 +1,48 @@
 import getTemplate from '../template';
-import showScreen from '../screen';
 
-const template = getTemplate(`
-  <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-    <h1 class="game__timer">NN</h1>
-    <div class="game__lives">
-      <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-    </div>
-  </header>
-  <div class="game">
-    <p class="game__task">Угадай, фото или рисунок?</p>
-    <form class="game__content  game__content--wide">
-      <div class="game__option">
-        <img src="http://placehold.it/705x455" alt="Option 1" width="705" height="455">
-        <label class="game__answer  game__answer--photo">
-          <input name="question1" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
-      </div>
+const processAnswer = (checkedBtns, step) => {
+  let results = checkedBtns.map((btn) => {
+    let url = btn.closest(`.game__option`).querySelector(`img`).src;
+    return step.get(url) === btn.value ? 1 : 0;
+  });
+  return results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
+};
+
+export default (state, cb) => {
+  let step = state.data[state.position];
+  let template = getTemplate(`
+    <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
+    <form class="game__content">
+      ${[...step.keys()].map((pic, i) => `
+        <div class="game__option">
+          <img src="${pic}" alt="Option ${i}" width="468" height="458">
+          <label class="game__answer game__answer--photo">
+            <input name="question${i}" type="radio" value="photo">
+            <span>Фото</span>
+          </label>
+          <label class="game__answer game__answer--paint">
+            <input name="question${i}" type="radio" value="paint">
+            <span>Рисунок</span>
+          </label>
+        </div>
+       `).join(``)}
     </form>
     <div class="stats">
       <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
+        ${state.answers.map((answer) => `<li class="stats__result stats__result--${answer}"></li>`).join(`\n`)}
       </ul>
-    </div>
-  </div>
-  <footer class="footer">
-    <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-    <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-    <div class="footer__social-links">
-      <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-      <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-      <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-      <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-    </div>
-  </footer>
-`);
+    </div>`, `div`, [`game`]);
 
-const backButton = template.querySelector(`.back`);
+  const radioButtons = [...template.querySelectorAll(`input[type=radio]`)];
+  radioButtons.forEach((radio) => {
+    radio.addEventListener(`change`, () => {
+      let checkedBtns = [...template.querySelectorAll(`input[type=radio]:checked`)];
+      if (checkedBtns.length === 2) {
+        let result = processAnswer(checkedBtns, step);
+        cb(result);
+      }
+    });
+  });
 
-backButton.addEventListener(`click`, () => showScreen(`greeting`));
-
-// Строго следуем ТЗ. Формально правильнее проверять input на change, а не label на click
-[...template.querySelectorAll(`.game__answer`)].forEach((label) => {
-  label.addEventListener(`click`, () => showScreen(`game3`));
-});
-
-
-export default template;
+  return template;
+};

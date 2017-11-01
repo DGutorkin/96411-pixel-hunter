@@ -1,15 +1,9 @@
 import getTemplate from '../template';
 import showScreen from '../screen';
+import getHeader from './header';
+import getGame from '../game';
 
 const template = getTemplate(`
-  <header class="header">
-    <div class="header__back">
-      <button class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.svg" width="101" height="44">
-      </button>
-    </div>
-  </header>
   <div class="rules">
     <h1 class="rules__title">Правила</h1>
     <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
@@ -26,23 +20,13 @@ const template = getTemplate(`
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </div>
-  <footer class="footer">
-    <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
-    <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
-    <div class="footer__social-links">
-      <a href="https://twitter.com/htmlacademy_ru" class="social-link  social-link--tw">Твиттер</a>
-      <a href="https://www.instagram.com/htmlacademy/" class="social-link  social-link--ins">Инстаграм</a>
-      <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
-      <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
-    </div>
-  </footer>
 `);
 
-const backButton = template.querySelector(`.back`);
+// тут конечно еще пойдет .insertAdjacentElement('afterbegin', element)
+template.insertBefore(getHeader(), template.firstChild);
+
 const rulesInput = template.querySelector(`.rules__input`);
 const rulesButton = template.querySelector(`.rules__button`);
-
-backButton.addEventListener(`click`, () => showScreen(`greeting`));
 
 /**
 * Вроде как disabled-кнопки на формах - это антипаттерн.
@@ -60,7 +44,7 @@ rulesInput.addEventListener(`keyup`, () => {
 */
 rulesButton.addEventListener(`click`, (evt) => {
   evt.preventDefault();
-  showScreen(`game1`);
+  showScreen(getGame());
 });
 
 

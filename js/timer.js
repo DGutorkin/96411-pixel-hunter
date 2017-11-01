@@ -1,9 +1,9 @@
-/** @function
-* @name getTimer - создает объект таймера
-* @param {number} value - количество секунд сколько тикать
-* @return {Object} - возвращает объект таймера с двумя методами tick() и isFinished()
-*/
-
+/**
+ * Создает объект таймера
+ * @function getTimer
+ * @param {number} value - количество секунд сколько тикать
+ * @return {Object} - возвращает объект таймера с двумя методами tick() и isFinished()
+ */
 const getTimer = (value) => {
   return {
     value,

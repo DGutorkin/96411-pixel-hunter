@@ -1,5 +1,6 @@
-/** @function
-* @name getScoreByTime - функция, определяющая правила начисления балов
+/**
+* Функция, определяющая правила начисления балов
+* @function getScoreByTime
 * @param {number} time - время, полученное от таймера
 * Предполагается, что:
 * - если время закончилось time === 0,
@@ -7,7 +8,6 @@
 * - во всех остальных случаях time === оставшееся время на ответ
 * @return {number} количество полученных баллов
 */
-
 const getScoreByTime = (time) => {
   let score = 0;
   if (time > 20) {
@@ -20,13 +20,13 @@ const getScoreByTime = (time) => {
   return score;
 };
 
-
-/** @function
+/**
+* Подсчет суммарного количества балов на основе ответов пользователя
+* @function getScore
 * @param {Array} answers - массив с ответами пользователя
 * @param {number} lives - количество оставшихся жизней
-* @return количество баллов или -1, если игра провалена
+* @return {number} количество баллов или -1, если игра провалена
 */
-
 export default (answers, lives) => {
   if (answers.length === 10) {
     let score = answers.reduce((sum, time) => sum + getScoreByTime(time), 0);
