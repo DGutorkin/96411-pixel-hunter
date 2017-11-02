@@ -1,3 +1,4 @@
-import showScreen from './screen';
+import AbstractView from './abstract-view';
+import intro from './screens/intro';
 
-showScreen(`intro`);
+AbstractView.showScreen(intro());

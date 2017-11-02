@@ -19,4 +19,12 @@ export default class AbstractView {
     }
     return this._element;
   }
+
+  static showScreen(view) {
+    const screenContainer = document.querySelector(`main.central`);
+    while (screenContainer.firstChild) {
+      screenContainer.removeChild(screenContainer.firstChild);
+    }
+    screenContainer.appendChild(view.element);
+  }
 }
