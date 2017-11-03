@@ -11,7 +11,7 @@ export default class ResultsView extends AbstractView {
     const history = this._history.slice();
     return `
       <div class="result">
-        <h1>Победа!</h1>
+        <h1>${history[0].lives > -1 ? `Победа!` : `Поражение!`}</h1>
         ${history.reverse().map((game, i) => {
     let correct = game.answers.filter((answer) => answer === `correct`).length;
     let slow = game.answers.filter((answer) => answer === `slow`).length;
