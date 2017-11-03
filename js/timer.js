@@ -22,13 +22,13 @@ const timer = (value) => {
     },
     tick() {
       this.onTick(this.value);
-      if (timer.value > 0) {
+      if (this.value > 0) {
         this.value--;
       }
       return this.value;
     },
     isFinished() {
-      return this.value < 0;
+      return this.value === 0;
     },
     restart(time) {
       this.value = time;

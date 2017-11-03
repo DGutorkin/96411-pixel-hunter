@@ -6,15 +6,21 @@ describe(`Timer`, () => {
     assert.equal(getTimer(10).value, 10);
   });
   it(`One tick decrease timer value by 1`, () => {
-    assert.equal(getTimer(10).tick().value, 9);
+    assert.equal(getTimer(10).tick(), 9);
   });
   it(`One tick decrease timer value by 1 and it's still unfinished`, () => {
-    assert(!getTimer(10).tick().isFinished());
+    let timer = getTimer(10);
+    timer.tick();
+    assert(!timer.isFinished());
   });
   it(`timer.value can not be negative`, () => {
-    assert.equal(getTimer(1).tick().tick().value, 0);
+    let timer = getTimer(1);
+    timer.tick();
+    assert.equal(timer.tick(), 0);
   });
   it(`1-second timer becomes finished after 1 tick`, () => {
-    assert(getTimer(1).tick().isFinished());
+    let timer = getTimer(1);
+    timer.tick();
+    assert(timer.isFinished());
   });
 });
