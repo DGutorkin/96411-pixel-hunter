@@ -59,6 +59,7 @@ const resetState = () => {
     lives: state.lives,
     answers: [...state.answers]
   });
+  state.timer = timer(TIME_FOR_ANSWER);
   state.lives = 3;
   state.position = 0;
   state.answers = new Array(10).fill(`unknown`);

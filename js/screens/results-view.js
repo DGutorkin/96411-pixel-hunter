@@ -65,7 +65,7 @@ export default class ResultsView extends AbstractView {
               </tr>
             </table>
           `;
-      }).join(`\n`)}
+  }).join(`\n`)}
     </div>`.trim();
   }
 
