@@ -22,7 +22,9 @@ const timer = (value) => {
     },
     tick() {
       this.onTick(this.value);
-      this.value--;
+      if (timer.value > 0) {
+        this.value--;
+      }
       return this.value;
     },
     isFinished() {

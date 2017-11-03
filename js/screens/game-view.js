@@ -7,11 +7,9 @@ import game3 from './game-3';
 const games = {game1, game2, game3};
 
 export default class GameView extends AbstractView {
-  constructor(step, answers) {
+  constructor(model) {
     super();
-    this._step = step;
-    this._type = step.size;
-    this._answers = answers;
+    this.model = model;
     this._header = header();
     this.drawStats();
   }
@@ -19,7 +17,7 @@ export default class GameView extends AbstractView {
   // генерим разметку на основе подключенных модулей game-*, зависящих от step
   get template() {
     return `
-      ${games[`game${this._type}`](this._step)}
+      ${games[this.model.gameType](this.model.step)}
       <div class="stats">
         <ul class="stats"></ul>
       </div>
@@ -39,15 +37,21 @@ export default class GameView extends AbstractView {
     return this._header;
   }
 
+  renderLevel() {
+    delete this._element;
+    this._header.drawLives(this.model.lives);
+    this.drawStats();
+    AbstractView.showScreen(this);
+
+  }
+
   drawStats() {
-    if (!this._statsElement) {
-      this._statsElement = this.element.querySelector(`ul.stats`);
+    const statsElement = this.element.querySelector(`ul.stats`);
+    while (statsElement.firstChild) {
+      statsElement.removeChild(statsElement.firstChild);
     }
-    while (this._statsElement.firstChild) {
-      this._statsElement.removeChild(this._statsElement.firstChild);
-    }
-    this._answers.forEach((answer) => {
-      this._statsElement.appendChild(this.getStatElement(answer));
+    this.model.answers.forEach((answer) => {
+      statsElement.appendChild(this.getStatElement(answer));
     });
   }
 
@@ -63,17 +67,17 @@ export default class GameView extends AbstractView {
     this.element.insertBefore(this.header.element, this.element.firstChild);
 
     this._listeners = {
-      1() {
+      game1() {
         [...this.element.querySelectorAll(`.game__answer`)].forEach((label) => {
           label.addEventListener(`click`, (evt) => {
             evt.preventDefault();
             let choice = evt.currentTarget.querySelector(`input`).value;
-            let result = choice === this._step.values().next().value ? `correct` : `wrong`;
+            let result = choice === this.model.step.values().next().value ? `correct` : `wrong`;
             this.onAnswer(result);
           });
         });
       },
-      2() {
+      game2() {
         const radioButtons = [...this.element.querySelectorAll(`input[type=radio]`)];
         radioButtons.forEach((radio) => {
           radio.addEventListener(`change`, () => {
@@ -81,7 +85,7 @@ export default class GameView extends AbstractView {
             if (checkedBtns.length === 2) {
               let results = checkedBtns.map((btn) => {
                 let url = btn.closest(`.game__option`).querySelector(`img`).src;
-                return this._step.get(url) === btn.value ? 1 : 0;
+                return this.model.step.get(url) === btn.value ? 1 : 0;
               });
               let result = results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
               this.onAnswer(result);
@@ -89,18 +93,18 @@ export default class GameView extends AbstractView {
           });
         });
       },
-      3() {
+      game3() {
         [...this.element.querySelectorAll(`.game__option`)].forEach((option) => {
           option.addEventListener(`click`, (evt) => {
             evt.preventDefault();
             let url = evt.target.querySelector(`img`).src;
-            let result = this._step.get(url) === `paint` ? `correct` : `wrong`;
+            let result = this.model.step.get(url) === `paint` ? `correct` : `wrong`;
             this.onAnswer(result);
           });
         });
       }
     };
-    // биндим листенеры в зависимсти от типа игры и в контексте объекта GameView
-    this._listeners[this._type].call(this);
+    // биндим листенеры в зависимости от типа игры и в контексте объекта GameView
+    this._listeners[this.model.gameType].call(this);
   }
 }

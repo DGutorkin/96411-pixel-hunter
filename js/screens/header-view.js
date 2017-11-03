@@ -23,6 +23,7 @@ export default class HeaderView extends AbstractView {
     return this._element;
   }
 
+  // отрисовка оставшихся жизней
   drawLives(lives) {
     if (!this._livesElement) {
       this._livesElement = this.element.querySelector(`.game__lives`);
