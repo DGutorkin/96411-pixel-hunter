@@ -60,7 +60,7 @@ export default class GameView extends AbstractView {
   onAnswer() {}
 
   bind() {
-    this.element.insertBefore(this._header.element, this.element.firstChild);
+    this.element.insertBefore(this.header.element, this.element.firstChild);
 
     this._listeners = {
       1() {

@@ -1,6 +1,8 @@
 import GameView from './screens/game-view';
 import results from './screens/results';
+import timer from './timer';
 
+const TIME_FOR_ANSWER = 30;
 const fetchData = () => {
   // данные из задания
   const source = {
@@ -44,7 +46,7 @@ const fetchData = () => {
 };
 
 let state = {
-  timer: `NN`,
+  timer: timer(TIME_FOR_ANSWER),
   lives: 3,
   position: 0,
   answers: new Array(10).fill(`unknown`),
@@ -62,27 +64,50 @@ const resetState = () => {
   state.answers = new Array(10).fill(`unknown`);
 };
 
-let step = state.data[state.position];
-let game = new GameView(step, state.answers);
-game.header.drawLives(state.lives);
 
-const onAnswer = (result) => {
-  state.answers[state.position] = result;
-  if (result === `wrong`) {
-    game.header.drawLives(--state.lives);
-  }
-  state.position++;
-  if (state.lives >= 0 && state.position < 10) {
-    step = state.data[state.position];
-    game = new GameView(step, state.answers);
-    game.onAnswer = onAnswer;
-    GameView.showScreen(game);
-  } else {
-    resetState();
-    GameView.showScreen(results(state.history));
-  }
+const startGame = () => {
+  let step = state.data[state.position];
+  let game = new GameView(step, state.answers);
+  game.header.drawLives(state.lives);
+  state.timer.start();
+
+  state.timer.onEnd = () => {
+    onAnswer(`wrong`);
+  };
+  state.timer.onTick = (time) => {
+    game.header.updateTimer(time);
+  };
+
+  const onAnswer = (result) => {
+    state.timer.stop();
+    if (result === `wrong`) {
+      game.header.drawLives(--state.lives);
+    } else {
+      let answerTime = TIME_FOR_ANSWER - state.timer.value;
+      if (answerTime < 10) {
+        result = `fast`;
+      }
+      if (answerTime > 20) {
+        result = `slow`;
+      }
+    }
+
+    state.answers[state.position] = result;
+    state.position++;
+    if (state.lives >= 0 && state.position < 10) {
+      state.timer.restart(TIME_FOR_ANSWER);
+      step = state.data[state.position];
+      game = new GameView(step, state.answers);
+      game.onAnswer = onAnswer;
+      GameView.showScreen(game);
+    } else {
+      resetState();
+      GameView.showScreen(results(state.history));
+    }
+  };
+
+  game.onAnswer = onAnswer;
+  return game;
 };
 
-game.onAnswer = onAnswer;
-
-export default () => game;
+export default () => startGame();

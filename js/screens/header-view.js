@@ -40,6 +40,13 @@ export default class HeaderView extends AbstractView {
     }
   }
 
+  updateTimer(time) {
+    if (!this._timer) {
+      this._timer = this.element.querySelector(`.game__timer`);
+    }
+    this._timer.textContent = time;
+  }
+
   getHeartElement(type = `full`) {
     let img = document.createElement(`img`);
     img.classList.add(`game__heart`);
