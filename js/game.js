@@ -5,7 +5,6 @@ import getData from './data/game-data';
 
 export default class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
-  // первую пачку изображений используем для инициализации View.
   constructor(data = getData()) {
     this.model = GameModel.getInitialState();
     this.model.data = data;
