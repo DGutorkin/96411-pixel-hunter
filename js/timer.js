@@ -10,6 +10,7 @@ const timer = (value) => {
     onEnd() {},
     onTick() {},
     start() {
+      this.tick();
       this.id = setInterval(() => {
         this.tick();
         if (this.isFinished()) {

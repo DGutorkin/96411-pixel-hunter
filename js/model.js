@@ -45,6 +45,10 @@ export default class GameModel {
     this.state.timer.start();
   }
 
+  resetTimer() {
+    this.state.timer.value = 30;
+  }
+
   nextLevel() {
     this.state.position++;
     this.restartTimer();
@@ -90,6 +94,7 @@ export default class GameModel {
 
   // сброс стейта путем присвоения начальных значений
   resetState() {
+    this.resetTimer();
     this.state.position = 0;
     this.state.answers = new Array(10).fill(`unknown`);
     this.state.lives = 3;
