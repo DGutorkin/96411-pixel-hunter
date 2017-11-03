@@ -101,6 +101,7 @@ const startGame = () => {
       game.onAnswer = onAnswer;
       GameView.showScreen(game);
     } else {
+      game.header.updateTimer(``);
       resetState();
       GameView.showScreen(results(state.history));
     }
