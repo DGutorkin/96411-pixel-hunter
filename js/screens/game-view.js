@@ -12,6 +12,7 @@ export default class GameView extends AbstractView {
     this._type = step.size;
   }
 
+  // генерим разметку на основе подключенных модулей game-*, зависящих от step
   get template() {
     return games[`game${this._type}`](this._step);
   }
@@ -66,6 +67,7 @@ export default class GameView extends AbstractView {
         });
       }
     };
+    // биндим листенеры в зависимсти от типа игры и в контексте объекта GameView
     this._listeners[this._type].call(this);
   }
 }
