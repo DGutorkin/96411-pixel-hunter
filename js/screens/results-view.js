@@ -8,10 +8,11 @@ export default class ResultsView extends AbstractView {
   }
 
   get template() {
+    const history = this._history.slice();
     return `
       <div class="result">
         <h1>Победа!</h1>
-        ${this._history.reverse().map((game, i) => `
+        ${history.reverse().map((game, i) => `
           <table class="result__table">
             <tr>
               <td class="result__number">${i + 1}.</td>
