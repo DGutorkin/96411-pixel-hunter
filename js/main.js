@@ -1,3 +1,2 @@
-import showScreen from './screen';
-
-showScreen(`intro`);
+import App from './application';
+App.showIntro();
