@@ -49,8 +49,7 @@ export default class GameScreen {
     if (this.model.isGameOver()) {
       this.gameOver();
     } else {
-      this.model.nextLevel();
-      this.view.renderLevel();
+      this.nextLevel();
     }
   }
 
