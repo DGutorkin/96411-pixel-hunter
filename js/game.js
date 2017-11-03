@@ -1,4 +1,3 @@
-// import getHeader from './screens/header';
 import GameView from './screens/game-view';
 import results from './screens/results';
 
@@ -64,17 +63,18 @@ const resetState = () => {
 };
 
 let step = state.data[state.position];
-let game = new GameView(step);
+let game = new GameView(step, state.answers);
+game.header.drawLives(state.lives);
 
 const onAnswer = (result) => {
   state.answers[state.position] = result;
   if (result === `wrong`) {
-    state.lives--;
+    game.header.drawLives(--state.lives);
   }
   state.position++;
   if (state.lives >= 0 && state.position < 10) {
     step = state.data[state.position];
-    game = new GameView(step);
+    game = new GameView(step, state.answers);
     game.onAnswer = onAnswer;
     GameView.showScreen(game);
   } else {
@@ -83,26 +83,6 @@ const onAnswer = (result) => {
   }
 };
 
-
 game.onAnswer = onAnswer;
 
 export default () => game;
-
-//
-// const getGame = () => {
-//   // Определяем тип текущей игры, на основании количества картинок в текущем step
-//   let step = state.data[state.position];
-//
-//   let game = new GameView(step);
-//
-//   // получаем HTML-элемент, соответствующий текущей игре.
-//   // let game = games[`game` + step.size](state, userAnswered);
-//
-//   game.onAnswer = userAnswered;
-//
-//   // апдейтим хедер
-//   // game.insertBefore(getHeader(state), game.firstChild);
-//   return game;
-// };
-//
-// export default getGame;

@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import getHeader from './header';
+import header from './header';
 
 export default class ResultsView extends AbstractView {
   constructor(history) {
@@ -45,7 +45,7 @@ export default class ResultsView extends AbstractView {
   }
 
   bind() {
-    this.element.insertBefore(getHeader(), this.element.firstChild);
+    this.element.insertBefore(header().element, this.element.firstChild);
   }
 
 }

@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import getHeader from './header';
+import header from './header';
 
 export default class RulesView extends AbstractView {
   get template() {
@@ -25,7 +25,7 @@ export default class RulesView extends AbstractView {
   onStart() {}
 
   bind() {
-    this.element.insertBefore(getHeader(), this.element.firstChild);
+    this.element.insertBefore(header().element, this.element.firstChild);
 
     const rulesInput = this.element.querySelector(`.rules__input`);
     const rulesButton = this.element.querySelector(`.rules__button`);
