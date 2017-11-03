@@ -36,6 +36,7 @@ export default class GameScreen {
 
   gameOver() {
     this.model.saveGameStats();
+    this.view.header.updateTimer(``);
     GameView.showScreen(results(this.model.history));
   }
 
