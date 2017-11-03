@@ -26,11 +26,11 @@ export default class ResultsView extends AbstractView {
                     ${game.answers.map((answer) => `<li class="stats__result stats__result--${answer}"></li>`).join(`\n`)}
                   </ul>
                 </td>
-                <td class="result__points">×&nbsp;100</td>
+                <td class="result__points">${ game.lives > -1 ? `×&nbsp;100` : ``}</td>
                 <td class="result__total">${game.lives > -1 ? (correct + slow + fast) * 100 : `FAIL`}</td>
               </tr>
 
-              ${ fast > 0 ? `
+              ${ game.lives > -1 && fast > 0 ? `
                 <tr>
                   <td></td>
                   <td class="result__extra">Бонус за скорость:</td>
@@ -50,7 +50,7 @@ export default class ResultsView extends AbstractView {
                 </tr>
               ` : ``}
 
-              ${ slow > 0 ? `
+              ${ game.lives > -1 && slow > 0 ? `
                 <tr>
                   <td></td>
                   <td class="result__extra">Штраф за медлительность:</td>
