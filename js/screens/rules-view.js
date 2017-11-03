@@ -38,7 +38,6 @@ export default class RulesView extends AbstractView {
       evt.preventDefault();
       this.onStart();
     });
-
   }
 
 }

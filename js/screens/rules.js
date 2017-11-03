@@ -1,11 +1,9 @@
 import RulesView from './rules-view';
-
-import getGame from '../game';
-
+import game from '../game';
 
 const rules = new RulesView();
 rules.onStart = () => {
-  RulesView.showScreen(getGame());
+  RulesView.showScreen(game());
 };
 
 export default () => rules;

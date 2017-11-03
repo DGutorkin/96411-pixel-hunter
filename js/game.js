@@ -1,12 +1,10 @@
-import getHeader from './screens/header';
-import game1 from './screens/game-1';
-import game2 from './screens/game-2';
-import game3 from './screens/game-3';
-import getStats from './screens/stats';
-import showScreen from './screen';
+// import getHeader from './screens/header';
+import GameView from './screens/game-view';
+// import getStats from './screens/stats';
+// import showScreen from './screen';
 
 // сохраняем разметку и eventListeners для каждого типа игры в объект games
-const games = {game1, game2, game3};
+// const games = {game1, game2, game3};
 
 const fetchData = () => {
   // данные из задания
@@ -69,32 +67,40 @@ const resetState = () => {
   state.answers = new Array(10).fill(`unknown`);
 };
 
-const userAnswered = (result) => {
+let step = state.data[state.position];
+let game = new GameView(step);
+
+game.onAnswer = (result) => {
   state.answers[state.position] = result;
   if (result === `wrong`) {
     state.lives--;
   }
   state.position++;
   if (state.lives >= 0 && state.position < 10) {
-    showScreen(getGame());
+    console.log(`next step`);
   } else {
     resetState();
-    showScreen(getStats(state));
+    // showScreen(getStats(state));
   }
-
 };
 
+export default () => game;
 
-const getGame = () => {
-  // Определяем тип текущей игры, на основании количества картинок в текущем step
-  let step = state.data[state.position];
-
-  // получаем HTML-элемент, соответствующий текущей игре.
-  let game = games[`game` + step.size](state, userAnswered);
-
-  // апдейтим хедер
-  game.insertBefore(getHeader(state), game.firstChild);
-  return game;
-};
-
-export default getGame;
+//
+// const getGame = () => {
+//   // Определяем тип текущей игры, на основании количества картинок в текущем step
+//   let step = state.data[state.position];
+//
+//   let game = new GameView(step);
+//
+//   // получаем HTML-элемент, соответствующий текущей игре.
+//   // let game = games[`game` + step.size](state, userAnswered);
+//
+//   game.onAnswer = userAnswered;
+//
+//   // апдейтим хедер
+//   // game.insertBefore(getHeader(state), game.firstChild);
+//   return game;
+// };
+//
+// export default getGame;
