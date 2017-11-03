@@ -1,3 +1,11 @@
 import ResultsView from './results-view';
 
-export default (history) => new ResultsView(history);
+export default class RulesScreen {
+  constructor(history) {
+    this.view = new ResultsView(history);
+  }
+
+  init() {
+    ResultsView.showScreen(this.view);
+  }
+}
