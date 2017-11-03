@@ -1,10 +1,6 @@
 // import getHeader from './screens/header';
 import GameView from './screens/game-view';
-// import getStats from './screens/stats';
-// import showScreen from './screen';
-
-// сохраняем разметку и eventListeners для каждого типа игры в объект games
-// const games = {game1, game2, game3};
+import results from './screens/results';
 
 const fetchData = () => {
   // данные из задания
@@ -70,19 +66,25 @@ const resetState = () => {
 let step = state.data[state.position];
 let game = new GameView(step);
 
-game.onAnswer = (result) => {
+const onAnswer = (result) => {
   state.answers[state.position] = result;
   if (result === `wrong`) {
     state.lives--;
   }
   state.position++;
   if (state.lives >= 0 && state.position < 10) {
-    console.log(`next step`);
+    step = state.data[state.position];
+    game = new GameView(step);
+    game.onAnswer = onAnswer;
+    GameView.showScreen(game);
   } else {
     resetState();
-    // showScreen(getStats(state));
+    GameView.showScreen(results(state.history));
   }
 };
+
+
+game.onAnswer = onAnswer;
 
 export default () => game;
 
