@@ -1,5 +1,5 @@
 import AbstractView from '../abstract-view';
-import greeting from './greeting';
+import App from '../application';
 
 export default class HeaderView extends AbstractView {
   get template() {
@@ -58,9 +58,13 @@ export default class HeaderView extends AbstractView {
     return img;
   }
 
+  onBack() {}
+
   bind() {
     this.element.querySelector(`.back`).addEventListener(`click`, () => {
-      AbstractView.showScreen(greeting());
+      this.updateTimer(``);
+      this.onBack();
+      App.showGreeting();
     });
   }
 }

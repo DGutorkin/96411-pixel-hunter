@@ -1,9 +1,18 @@
 import IntroView from './intro-view';
-import greeting from './greeting';
+import App from '../application';
 
-const intro = new IntroView();
-intro.onStart = () => {
-  IntroView.showScreen(greeting());
-};
+class IntroScreen {
+  constructor() {
+    this.view = new IntroView();
+  }
 
-export default () => intro;
+  init() {
+    IntroView.showScreen(this.view);
+
+    this.view.onStart = () => {
+      App.showGreeting();
+    };
+  }
+}
+
+export default new IntroScreen();

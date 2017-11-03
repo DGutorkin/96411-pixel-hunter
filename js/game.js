@@ -3,7 +3,7 @@ import GameModel from './model';
 import results from './screens/results';
 import getData from './data/game-data';
 
-export default class GameScreen {
+class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
   constructor(data = getData()) {
     this.model = GameModel.getInitialState();
@@ -11,17 +11,8 @@ export default class GameScreen {
     this.view = new GameView(this.model);
 
     this.onAnswer = this.onAnswer.bind(this);
-    this.view.onAnswer = this.onAnswer;
 
-    // вешаем обработчики на таймер:
-    // таймер кончился = ответ wrong
-    this.model.state.timer.onEnd = () => {
-      this.onAnswer(`wrong`);
-    };
-    // таймер тикнул - проапдейтили хедер
-    this.model.state.timer.onTick = (time) => {
-      this.view.header.updateTimer(time);
-    };
+    this.bind();
   }
 
   init() {
@@ -53,4 +44,25 @@ export default class GameScreen {
     }
   }
 
+  bind() {
+    this.view.onAnswer = this.onAnswer;
+    // вешаем обработчики на таймер:
+    // таймер кончился = ответ wrong
+    this.model.state.timer.onEnd = () => {
+      this.onAnswer(`wrong`);
+    };
+    // таймер тикнул - проапдейтили хедер
+    this.model.state.timer.onTick = (time) => {
+      this.view.header.updateTimer(time);
+    };
+
+    // обработчик на header back btn
+    this.view.header.onBack = () => {
+      this.model.stopTimer();
+      this.model.resetState();
+      this.view.renderLevel();
+    };
+  }
 }
+
+export default new GameScreen();

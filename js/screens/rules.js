@@ -1,10 +1,18 @@
 import RulesView from './rules-view';
-import GameScreen from '../game';
+import App from '../application';
 
-const rules = new RulesView();
-rules.onStart = () => {
-  let game = new GameScreen();
-  game.init();
-};
+class RulesScreen {
+  constructor() {
+    this.view = new RulesView();
+  }
 
-export default () => rules;
+  init() {
+    RulesView.showScreen(this.view);
+
+    this.view.onStart = () => {
+      App.startGame();
+    };
+  }
+}
+
+export default new RulesScreen();

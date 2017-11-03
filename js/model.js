@@ -5,6 +5,8 @@ const TIME_FOR_ANSWER = 30;
 export default class GameModel {
   constructor(state) {
     this.state = state;
+
+    this.resetState = this.resetState.bind(this);
   }
 
   get position() {
@@ -84,6 +86,13 @@ export default class GameModel {
   // подходящего шаблона
   get gameType() {
     return `game${this.step.size}`;
+  }
+
+  // сброс стейта путем присвоения начальных значений
+  resetState() {
+    this.state.position = 0;
+    this.state.answers = new Array(10).fill(`unknown`);
+    this.state.lives = 3;
   }
 
   // начальный стейт для новой игры

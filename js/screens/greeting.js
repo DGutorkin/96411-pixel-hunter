@@ -1,9 +1,18 @@
 import GreetingView from './greeting-view';
-import rules from './rules';
+import App from '../application';
 
-const greeting = new GreetingView();
-greeting.onStart = () => {
-  GreetingView.showScreen(rules());
-};
+class GreetingScreen {
+  constructor() {
+    this.view = new GreetingView();
+  }
 
-export default () => greeting;
+  init() {
+    GreetingView.showScreen(this.view);
+
+    this.view.onStart = () => {
+      App.showRules();
+    };
+  }
+}
+
+export default new GreetingScreen();
