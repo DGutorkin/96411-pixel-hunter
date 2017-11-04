@@ -5,5 +5,11 @@ const QuestionType = {
 };
 
 export default (data) => {
-  return data.map((question) => QuestionType[question.type]);
+  data.forEach((question) => {
+    question._type = QuestionType[question.type];
+    question.answers.forEach((answer) => {
+      answer.type = `painting` ? `paint` : `photo`;
+    });
+  });
+  return data;
 };

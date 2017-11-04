@@ -97,7 +97,14 @@ export default class GameModel {
   // количества картинок на текущем уровне. Используется GameView для выбора
   // подходящего шаблона
   get gameType() {
-    return `game${this.step.size}`;
+    return `game${this.step._type}`;
+  }
+
+  // функция принимает адрес картинки и ответ пользователя
+  // ищет тип изображения в текущем шаге по URL и сравнивает с ответом
+  answerIsCorrect(url, userAnswer) {
+    let choice = this.step.answers.filter((answer) => answer.image.url === url)[0];
+    return userAnswer === choice.type;
   }
 
   // сброс стейта путем присвоения начальных значений

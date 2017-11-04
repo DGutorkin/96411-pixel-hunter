@@ -72,7 +72,7 @@ export default class GameView extends AbstractView {
           label.addEventListener(`click`, (evt) => {
             evt.preventDefault();
             let choice = evt.currentTarget.querySelector(`input`).value;
-            let result = choice === this.model.step.values().next().value ? `correct` : `wrong`;
+            let result = choice === this.model.step.answers[0].type ? `correct` : `wrong`;
             this.onAnswer(result);
           });
         });
@@ -85,7 +85,7 @@ export default class GameView extends AbstractView {
             if (checkedBtns.length === 2) {
               let results = checkedBtns.map((btn) => {
                 let url = btn.closest(`.game__option`).querySelector(`img`).src;
-                return this.model.step.get(url) === btn.value ? 1 : 0;
+                return this.model.answerIsCorrect(url, btn.value) ? 1 : 0;
               });
               let result = results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
               this.onAnswer(result);
@@ -97,8 +97,9 @@ export default class GameView extends AbstractView {
         [...this.element.querySelectorAll(`.game__option`)].forEach((option) => {
           option.addEventListener(`click`, (evt) => {
             evt.preventDefault();
+            let subtype = this.element.querySelector(`.game__task`).dataset.subtype;
             let url = evt.target.querySelector(`img`).src;
-            let result = this.model.step.get(url) === `paint` ? `correct` : `wrong`;
+            let result = this.model.answerIsCorrect(url, subtype) ? `correct` : `wrong`;
             this.onAnswer(result);
           });
         });
