@@ -1,10 +1,10 @@
 import GameView from './screens/game-view';
 import GameModel from './model';
-import getData from './data/game-data';
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
-  constructor(data = getData()) {
+  constructor(data) {
+    console.log(`Creating game: `, data);
     this.model = GameModel.getInitialState();
     this.model.data = data;
     this.view = new GameView(this.model);
@@ -65,4 +65,4 @@ class GameScreen {
   }
 }
 
-export default new GameScreen();
+export default GameScreen;
