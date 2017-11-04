@@ -64,6 +64,7 @@ class GameScreen {
     this.view.header.onBack = () => {
       // eslint-disable-next-line
       if (confirm(`Вся игра будет потеряна`)) {
+        this.view.header.drawLives();
         this.stopGame();
         location.hash = `greeting`;
       }

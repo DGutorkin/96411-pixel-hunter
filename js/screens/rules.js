@@ -9,6 +9,7 @@ class RulesScreen {
     RulesView.showScreen(this.view);
 
     this.view.onStart = (name) => {
+      delete this.view._element;
       app.startGame(name);
     };
   }
