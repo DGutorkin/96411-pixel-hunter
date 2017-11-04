@@ -1,5 +1,4 @@
 import IntroView from './intro-view';
-import App from '../application';
 
 class IntroScreen {
   constructor() {
@@ -10,7 +9,7 @@ class IntroScreen {
     IntroView.showScreen(this.view);
 
     this.view.onStart = () => {
-      App.showGreeting();
+      location.hash = `greeting`;
     };
   }
 }

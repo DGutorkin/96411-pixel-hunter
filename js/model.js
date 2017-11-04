@@ -1,4 +1,5 @@
 import timer from './timer';
+import ENCODE_KEYS from './constants';
 
 const TIME_FOR_ANSWER = 30;
 
@@ -83,6 +84,13 @@ export default class GameModel {
       answer = `slow`;
     }
     return answer;
+  }
+
+  encodeStats() {
+    return this.state.history.map((game) => {
+      let answersString = game.answers.map((answer) => ENCODE_KEYS[answer]).join(``);
+      return `${answersString}${game.lives < 1 ? 0 : game.lives}`;
+    }).join(`.`);
   }
 
   // возвращает тип игры вида game1, game2, game3 в зависимости от

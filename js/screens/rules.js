@@ -1,5 +1,4 @@
 import RulesView from './rules-view';
-import App from '../application';
 
 class RulesScreen {
   constructor() {
@@ -10,7 +9,7 @@ class RulesScreen {
     RulesView.showScreen(this.view);
 
     this.view.onStart = () => {
-      App.startGame();
+      location.hash = `game`;
     };
   }
 }
