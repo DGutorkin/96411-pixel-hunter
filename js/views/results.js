@@ -4,7 +4,9 @@ import header from '../screens/header';
 export default class ResultsView extends AbstractView {
   constructor(history) {
     super();
-    this._history = history.reverse();
+    if (Array.isArray(history)) {
+      this._history = history.reverse();
+    }
   }
 
   isWin(game) {
