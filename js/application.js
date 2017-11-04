@@ -1,29 +1,31 @@
 import introScreen from './screens/intro';
 import greetingScreen from './screens/greeting';
 import rulesScreen from './screens/rules';
-import gameScreen from './game';
+import GameScreen from './game';
 import ResultScreen from './screens/results';
+import Loader from './loader';
+import adapt from './data/adapter';
 import ENCODE_KEYS from './constants';
 
-class Application {
-
+export default class Application {
   constructor() {
     this.onHashChange = this.onHashChange.bind(this);
+    this.startGame = this.startGame.bind(this);
     window.addEventListener(`hashchange`, this.onHashChange);
-
   }
 
-  init() {
+  init(data) {
+    this._data = data;
     this.onHashChange();
   }
 
   route(screen = `intro`) {
     const routes = {
-      intro: Application.showIntro,
-      greeting: Application.showGreeting,
-      rules: Application.showRules,
-      game: Application.startGame,
-      stats: Application.showStats
+      intro: this.showIntro,
+      greeting: this.showGreeting,
+      rules: this.showRules,
+      game: this.startGame,
+      stats: this.showStats
     };
     if (typeof routes[screen] === `function`) {
       routes[screen]();
@@ -41,24 +43,24 @@ class Application {
     }
   }
 
-
-  static showIntro() {
+  showIntro() {
     introScreen.init();
   }
 
-  static showGreeting() {
+  showGreeting() {
     greetingScreen.init();
   }
 
-  static showRules() {
+  showRules() {
     rulesScreen.init();
   }
 
-  static startGame() {
+  startGame() {
+    let gameScreen = new GameScreen(this._data);
     gameScreen.init();
   }
 
-  static showStats() {
+  showStats() {
     // свап key/value
     const DECODE_KEYS = Object.assign({}, ...Object.entries(ENCODE_KEYS).map(([a, b]) => ({[b]: a})));
 
@@ -80,4 +82,8 @@ class Application {
   }
 }
 
-export default Application;
+const app = new Application();
+Loader.loadData().
+    then(adapt).
+    then((data) => app.init(data)).
+    catch(window.console.error);

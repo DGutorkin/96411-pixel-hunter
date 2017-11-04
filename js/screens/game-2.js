@@ -2,9 +2,9 @@ export default (step) => {
   return `
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
-      ${[...step.keys()].map((pic, i) => `
+      ${[...step.answers].map((pic, i) => `
         <div class="game__option">
-          <img src="${pic}" alt="Option ${i}" width="468" height="458">
+          <img src="${pic.image.url}" alt="Option ${i}" width="468" height="458">
           <label class="game__answer game__answer--photo">
             <input name="question${i}" type="radio" value="photo">
             <span>Фото</span>
