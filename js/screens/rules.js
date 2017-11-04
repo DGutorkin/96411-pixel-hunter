@@ -5,11 +5,11 @@ class RulesScreen {
     this.view = new RulesView();
   }
 
-  init() {
+  init(app) {
     RulesView.showScreen(this.view);
 
     this.view.onStart = (name) => {
-      location.hash = `game=${name}`;
+      app.startGame(name);
     };
   }
 }

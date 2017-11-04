@@ -10,6 +10,7 @@ export default class Application {
   constructor() {
     this.onHashChange = this.onHashChange.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.showRules = this.showRules.bind(this);
     window.addEventListener(`hashchange`, this.onHashChange);
   }
 
@@ -51,11 +52,11 @@ export default class Application {
   }
 
   showRules() {
-    rulesScreen.init();
+    rulesScreen.init(this);
   }
 
-  startGame() {
-    let gameScreen = new GameScreen(this._data);
+  startGame(username) {
+    let gameScreen = new GameScreen(this._data, username);
     gameScreen.init();
   }
 
