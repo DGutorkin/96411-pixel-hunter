@@ -36,7 +36,7 @@ export default class RulesView extends AbstractView {
 
     rulesButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onStart();
+      this.onStart(rulesInput.value);
     });
   }
 

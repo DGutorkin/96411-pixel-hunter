@@ -8,8 +8,8 @@ class RulesScreen {
   init() {
     RulesView.showScreen(this.view);
 
-    this.view.onStart = () => {
-      location.hash = `game`;
+    this.view.onStart = (name) => {
+      location.hash = `game=${name}`;
     };
   }
 }

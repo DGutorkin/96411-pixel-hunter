@@ -1,11 +1,13 @@
 import GameView from './views/game';
 import GameModel from './model';
 
+
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
   constructor(data) {
     this.model = GameModel.getInitialState();
     this.model.data = data;
+    this.model.user = location.hash.replace(`#`, ``).split(`=`)[1];
     this.view = new GameView(this.model);
 
     this.onAnswer = this.onAnswer.bind(this);
@@ -24,9 +26,8 @@ class GameScreen {
   }
 
   gameOver() {
-    this.model.saveGameStats();
     this.view.header.updateTimer(``);
-    location.hash = `stats=${this.model.encodeStats()}`;
+    this.model.getServerData();
   }
 
   stopGame() {

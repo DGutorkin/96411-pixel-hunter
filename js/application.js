@@ -5,7 +5,6 @@ import GameScreen from './game';
 import ResultScreen from './screens/results';
 import Loader from './loader';
 import adapt from './data/adapter';
-import ENCODE_KEYS from './constants';
 
 export default class Application {
   constructor() {
@@ -25,7 +24,7 @@ export default class Application {
       greeting: this.showGreeting,
       rules: this.showRules,
       game: this.startGame,
-      stats: this.showStats
+      stats: Application.showStats
     };
     if (typeof routes[screen] === `function`) {
       routes[screen]();
@@ -60,26 +59,11 @@ export default class Application {
     gameScreen.init();
   }
 
-  showStats() {
-    // свап key/value
-    const DECODE_KEYS = Object.assign({}, ...Object.entries(ENCODE_KEYS).map(([a, b]) => ({[b]: a})));
-
-    let statsEncoded = location.hash.replace(`#`, ``).split(`=`)[1];
-    let history = `unknown`;
-    if (statsEncoded) {
-      history = statsEncoded.split(`.`).map((gameEncoded) => {
-        let gameArray = gameEncoded.split(``);
-        let lives = gameArray.splice(-1);
-        return {
-          answers: gameArray.map((answer) => DECODE_KEYS[answer]),
-          lives
-        };
-      });
-    }
-
+  static showStats(history = `unknown`) {
     let resultsScreen = new ResultScreen(history);
     resultsScreen.init();
   }
+
 }
 
 const app = new Application();
