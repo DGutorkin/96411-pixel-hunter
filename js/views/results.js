@@ -7,12 +7,6 @@ export default class ResultsView extends AbstractView {
     this._history = history.reverse();
   }
 
-  // isWin() {
-  //   return this._history[0].answers.length === 10 &&
-  //          this._history[0].answers.filter((answer) => answer === `wrong`).length < 4 &&
-  //          this._history[0].lives > -1;
-  // }
-
   isWin(game) {
     return game.answers.length === 10 &&
            game.answers.filter((answer) => answer === `wrong`).length < 4 &&
