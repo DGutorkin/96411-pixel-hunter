@@ -1,8 +1,8 @@
 import AbstractView from './abstract';
+import game1 from './gametypes/game-1';
+import game2 from './gametypes/game-2';
+import game3 from './gametypes/game-3';
 import header from '../screens/header';
-import game1 from '../screens/game-1';
-import game2 from '../screens/game-2';
-import game3 from '../screens/game-3';
 
 const games = {game1, game2, game3};
 
