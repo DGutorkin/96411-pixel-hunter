@@ -1,5 +1,7 @@
 import AbstractView from '../abstract-view';
 
+const BLINKING_TIME = 5;
+
 export default class HeaderView extends AbstractView {
   get template() {
     return `
@@ -43,6 +45,11 @@ export default class HeaderView extends AbstractView {
   updateTimer(time) {
     if (!this._timer) {
       this._timer = this.element.querySelector(`.game__timer`);
+    }
+    if (time <= BLINKING_TIME) {
+      this._timer.classList.add(`blinking`);
+    } else {
+      this._timer.classList.remove(`blinking`);
     }
     this._timer.textContent = time;
   }
