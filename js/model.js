@@ -79,14 +79,6 @@ export default class GameModel {
     return answer;
   }
 
-  // encodeStats(data) {
-  //   console.log(`data to encode:`, data);
-  //   return this.state.history.map((game) => {
-  //     let answersString = game.answers.map((answer) => ENCODE_KEYS[answer]).join(``);
-  //     return `${answersString}${game.lives < 1 ? 0 : game.lives}`;
-  //   }).join(`.`);
-  // }
-
   // возвращает тип игры вида game1, game2, game3 в зависимости от
   // количества картинок на текущем уровне. Используется GameView для выбора
   // подходящего шаблона
