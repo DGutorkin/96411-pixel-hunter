@@ -9,9 +9,13 @@ export default class ResultsView extends AbstractView {
 
   get template() {
     const history = this._history.slice();
+    let isWin = history[0].answers.length === 10 &&
+                history[0].answers.filter((answer) => answer === `wrong`).length < 4 &&
+                history[0].lives > -1;
+
     return `
       <div class="result">
-        <h1>${history[0].lives > -1 ? `Победа!` : `Поражение!`}</h1>
+        <h1>${ isWin ? `Победа!` : `Поражение!`}</h1>
         ${history.reverse().map((game, i) => {
     let correct = game.answers.filter((answer) => answer === `correct`).length;
     let slow = game.answers.filter((answer) => answer === `slow`).length;
@@ -26,11 +30,11 @@ export default class ResultsView extends AbstractView {
                     ${game.answers.map((answer) => `<li class="stats__result stats__result--${answer}"></li>`).join(`\n`)}
                   </ul>
                 </td>
-                <td class="result__points">${ game.lives > -1 ? `×&nbsp;100` : ``}</td>
-                <td class="result__total">${game.lives > -1 ? (correct + slow + fast) * 100 : `FAIL`}</td>
+                <td class="result__points">${ isWin ? `×&nbsp;100` : ``}</td>
+                <td class="result__total">${isWin ? (correct + slow + fast) * 100 : `FAIL`}</td>
               </tr>
 
-              ${ game.lives > -1 && fast > 0 ? `
+              ${ isWin && fast > 0 ? `
                 <tr>
                   <td></td>
                   <td class="result__extra">Бонус за скорость:</td>
@@ -40,7 +44,7 @@ export default class ResultsView extends AbstractView {
                 </tr>
               ` : ``}
 
-              ${ game.lives > 0 ? `
+              ${ isWin && game.lives > 0 ? `
                 <tr>
                   <td></td>
                   <td class="result__extra">Бонус за жизни:</td>
@@ -50,7 +54,7 @@ export default class ResultsView extends AbstractView {
                 </tr>
               ` : ``}
 
-              ${ game.lives > -1 && slow > 0 ? `
+              ${ isWin && slow > 0 ? `
                 <tr>
                   <td></td>
                   <td class="result__extra">Штраф за медлительность:</td>
@@ -61,7 +65,7 @@ export default class ResultsView extends AbstractView {
               ` : ``}
 
               <tr>
-                <td colspan="5" class="result__total  result__total--final">${ game.lives > -1 ? total + game.lives * 50 : ``}</td>
+                <td colspan="5" class="result__total  result__total--final">${ isWin ? total + game.lives * 50 : ``}</td>
               </tr>
             </table>
           `;

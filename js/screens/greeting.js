@@ -1,5 +1,4 @@
 import GreetingView from './greeting-view';
-import App from '../application';
 
 class GreetingScreen {
   constructor() {
@@ -10,7 +9,7 @@ class GreetingScreen {
     GreetingView.showScreen(this.view);
 
     this.view.onStart = () => {
-      App.showRules();
+      location.hash = `rules`;
     };
   }
 }

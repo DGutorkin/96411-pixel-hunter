@@ -1,7 +1,6 @@
 import GameView from './screens/game-view';
 import GameModel from './model';
 import getData from './data/game-data';
-import App from './application';
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
@@ -28,8 +27,12 @@ class GameScreen {
   gameOver() {
     this.model.saveGameStats();
     this.view.header.updateTimer(``);
-    // GameView.showScreen(results(this.model.history));
-    App.showStats(this.model.history);
+    location.hash = `stats=${this.model.encodeStats()}`;
+  }
+
+  stopGame() {
+    this.model.stopTimer();
+    this.model.resetState();
   }
 
   onAnswer(result) {
@@ -58,11 +61,7 @@ class GameScreen {
     };
 
     // обработчик на header back btn
-    this.view.header.onBack = () => {
-      this.model.stopTimer();
-      this.model.resetState();
-      this.view.renderLevel();
-    };
+    this.view.header.onBack = () => this.stopGame();
   }
 }
 
