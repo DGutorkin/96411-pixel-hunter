@@ -1,4 +1,4 @@
-import AbstractView from '../abstract-view';
+import AbstractView from './abstract';
 
 const BLINKING_TIME = 5;
 
@@ -25,7 +25,7 @@ export default class HeaderView extends AbstractView {
   }
 
   // отрисовка оставшихся жизней
-  drawLives(lives) {
+  drawLives(lives = -1) {
     if (!this._livesElement) {
       this._livesElement = this.element.querySelector(`.game__lives`);
     }
@@ -64,13 +64,14 @@ export default class HeaderView extends AbstractView {
     return img;
   }
 
-  onBack() {}
+  onBack() {
+    location.hash = `greeting`;
+  }
 
   bind() {
     this.element.querySelector(`.back`).addEventListener(`click`, () => {
       this.updateTimer(``);
       this.onBack();
-      location.hash = `greeting`;
     });
   }
 }

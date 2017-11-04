@@ -8,7 +8,7 @@ export default (data) => {
   data.forEach((question) => {
     question._type = QuestionType[question.type];
     question.answers.forEach((answer) => {
-      answer.type = `painting` ? `paint` : `photo`;
+      answer.type = answer.type === `painting` ? `paint` : `photo`;
     });
   });
   return data;

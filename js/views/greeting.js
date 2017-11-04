@@ -1,4 +1,4 @@
-import AbstractView from '../abstract-view';
+import AbstractView from './abstract';
 
 export default class GreetingView extends AbstractView {
   get template() {

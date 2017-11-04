@@ -1,15 +1,16 @@
-import RulesView from './rules-view';
+import RulesView from '../views/rules';
 
 class RulesScreen {
   constructor() {
     this.view = new RulesView();
   }
 
-  init() {
+  init(app) {
     RulesView.showScreen(this.view);
 
-    this.view.onStart = () => {
-      location.hash = `game`;
+    this.view.onStart = (name) => {
+      delete this.view._element;
+      app.startGame(name);
     };
   }
 }

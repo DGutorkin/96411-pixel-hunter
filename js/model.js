@@ -1,5 +1,6 @@
 import timer from './timer';
-import ENCODE_KEYS from './constants';
+import Loader from './loader';
+import App from './application';
 
 const TIME_FOR_ANSWER = 30;
 
@@ -55,14 +56,6 @@ export default class GameModel {
     this.restartTimer();
   }
 
-  // сохраняем историю игр, но пока не умеем с ней работать
-  saveGameStats() {
-    this.state.history.push({
-      answers: this.state.answers.slice(),
-      lives: this.lives
-    });
-  }
-
   // сохраняем ответ в state.answers: отрицательные сразу, для положительных - вычисляем скорость
   saveAnswer(result) {
     this.state.answers[this.position] = result === `wrong` ? `wrong` : this.getAnswerSpeed();
@@ -86,13 +79,6 @@ export default class GameModel {
     return answer;
   }
 
-  encodeStats() {
-    return this.state.history.map((game) => {
-      let answersString = game.answers.map((answer) => ENCODE_KEYS[answer]).join(``);
-      return `${answersString}${game.lives < 1 ? 0 : game.lives}`;
-    }).join(`.`);
-  }
-
   // возвращает тип игры вида game1, game2, game3 в зависимости от
   // количества картинок на текущем уровне. Используется GameView для выбора
   // подходящего шаблона
@@ -113,6 +99,27 @@ export default class GameModel {
     this.state.position = 0;
     this.state.answers = new Array(10).fill(`unknown`);
     this.state.lives = 3;
+  }
+
+  processFromServer(data = []) {
+    let date = new Date();
+    this.state.history = data;
+    let thisResults = {
+      answers: this.state.answers.slice(),
+      lives: this.lives,
+      date: date.getTime()
+    };
+    this.state.history.push(thisResults);
+
+    App.showStats(this.state.history);
+    Loader.saveResults(thisResults, this.user);
+  }
+
+  getServerData() {
+    let user = this.user;
+    Loader.loadResults(user).then((res) => {
+      this.processFromServer(res);
+    }).catch(() => this.processFromServer());
   }
 
   // начальный стейт для новой игры

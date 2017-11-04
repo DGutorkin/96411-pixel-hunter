@@ -1,11 +1,13 @@
-import GameView from './screens/game-view';
+import GameView from './views/game';
 import GameModel from './model';
+
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
-  constructor(data) {
+  constructor(data, username = `default`) {
     this.model = GameModel.getInitialState();
     this.model.data = data;
+    this.model.user = username;
     this.view = new GameView(this.model);
 
     this.onAnswer = this.onAnswer.bind(this);
@@ -24,9 +26,8 @@ class GameScreen {
   }
 
   gameOver() {
-    this.model.saveGameStats();
     this.view.header.updateTimer(``);
-    location.hash = `stats=${this.model.encodeStats()}`;
+    this.model.getServerData();
   }
 
   stopGame() {
@@ -60,7 +61,14 @@ class GameScreen {
     };
 
     // обработчик на header back btn
-    this.view.header.onBack = () => this.stopGame();
+    this.view.header.onBack = () => {
+      // eslint-disable-next-line
+      if (confirm(`Вся игра будет потеряна`)) {
+        this.view.header.drawLives();
+        this.stopGame();
+        location.hash = `greeting`;
+      }
+    };
   }
 }
 
