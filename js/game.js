@@ -1,4 +1,4 @@
-import GameView from './screens/game-view';
+import GameView from './views/game';
 import GameModel from './model';
 
 class GameScreen {

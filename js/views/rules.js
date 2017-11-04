@@ -1,5 +1,5 @@
-import AbstractView from '../abstract-view';
-import header from './header';
+import AbstractView from './abstract';
+import header from '../screens/header';
 
 export default class RulesView extends AbstractView {
   get template() {

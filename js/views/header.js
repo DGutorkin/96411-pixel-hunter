@@ -1,4 +1,4 @@
-import AbstractView from '../abstract-view';
+import AbstractView from './abstract';
 
 const BLINKING_TIME = 5;
 

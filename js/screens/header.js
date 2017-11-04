@@ -1,4 +1,4 @@
-import HeaderView from './header-view';
+import HeaderView from '../views/header';
 
 const header = new HeaderView();
 

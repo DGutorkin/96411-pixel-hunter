@@ -1,4 +1,4 @@
-import ResultsView from './results-view';
+import ResultsView from '../views/results';
 
 export default class RulesScreen {
   constructor(history) {
