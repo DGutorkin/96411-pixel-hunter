@@ -85,7 +85,12 @@ export default class ResultsView extends AbstractView {
   }
 
   bind() {
-    this.element.insertBefore(header().element, this.element.firstChild);
+
+    let headerScreen = header();
+    headerScreen.onBack = () => {
+      location.hash = `greeting`;
+    };
+    this.element.insertBefore(headerScreen.element, this.element.firstChild);
   }
 
 }

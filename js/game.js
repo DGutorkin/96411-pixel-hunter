@@ -60,7 +60,13 @@ class GameScreen {
     };
 
     // обработчик на header back btn
-    this.view.header.onBack = () => this.stopGame();
+    this.view.header.onBack = () => {
+      // eslint-disable-next-line
+      if (confirm(`Вся игра будет потеряна`)) {
+        this.stopGame();
+        location.hash = `greeting`;
+      }
+    };
   }
 }
 

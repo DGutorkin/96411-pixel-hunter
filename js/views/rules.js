@@ -2,6 +2,7 @@ import AbstractView from './abstract';
 import header from '../screens/header';
 
 export default class RulesView extends AbstractView {
+
   get template() {
     return `
     <div class="rules">
@@ -26,7 +27,6 @@ export default class RulesView extends AbstractView {
 
   bind() {
     this.element.insertBefore(header().element, this.element.firstChild);
-
     const rulesInput = this.element.querySelector(`.rules__input`);
     const rulesButton = this.element.querySelector(`.rules__button`);
 
