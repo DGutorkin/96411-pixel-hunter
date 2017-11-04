@@ -4,7 +4,6 @@ import GameModel from './model';
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
   constructor(data) {
-    console.log(`Creating game: `, data);
     this.model = GameModel.getInitialState();
     this.model.data = data;
     this.view = new GameView(this.model);
