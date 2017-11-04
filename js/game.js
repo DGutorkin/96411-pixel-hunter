@@ -1,7 +1,7 @@
 import GameView from './screens/game-view';
 import GameModel from './model';
-import results from './screens/results';
 import getData from './data/game-data';
+import App from './application';
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
@@ -28,7 +28,8 @@ class GameScreen {
   gameOver() {
     this.model.saveGameStats();
     this.view.header.updateTimer(``);
-    GameView.showScreen(results(this.model.history));
+    // GameView.showScreen(results(this.model.history));
+    App.showStats(this.model.history);
   }
 
   onAnswer(result) {
