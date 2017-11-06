@@ -135,6 +135,9 @@
 
     background-color: rgba(223, 78, 78, 0.4);
   }
+  & > img {
+    pointer-events: none;
+  }
 
 }
 

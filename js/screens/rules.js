@@ -10,6 +10,7 @@ class RulesScreen {
 
     this.view.onStart = (name) => {
       delete this.view._element;
+      history.pushState(null, null, `#game`);
       app.startGame(name);
     };
   }
