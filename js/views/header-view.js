@@ -64,14 +64,14 @@ export default class HeaderView extends AbstractView {
     return img;
   }
 
-  onBack() {
-    location.hash = `greeting`;
-  }
-
   bind() {
     this.element.querySelector(`.back`).addEventListener(`click`, () => {
       this.updateTimer(``);
       this.onBack();
     });
+  }
+
+  onBack() {
+    location.hash = `greeting`;
   }
 }

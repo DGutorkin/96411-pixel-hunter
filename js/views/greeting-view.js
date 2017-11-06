@@ -19,8 +19,6 @@ export default class GreetingView extends AbstractView {
     `.trim();
   }
 
-  onStart() {}
-
   bind() {
     const arrow = this.element.querySelector(`.greeting__continue`);
     arrow.addEventListener(`click`, () => {
@@ -28,4 +26,5 @@ export default class GreetingView extends AbstractView {
     });
   }
 
+  onStart() {}
 }

@@ -1,8 +1,7 @@
 import timer from './timer';
 import Loader from './loader';
 import App from './application';
-
-const TIME_FOR_ANSWER = 30;
+import {ANSWER, TIME_FOR_ANSWER, INITIAL_LIVES} from './constants';
 
 export default class GameModel {
   constructor(state) {
@@ -29,12 +28,19 @@ export default class GameModel {
     return this.state.history;
   }
 
+  // возвращает тип игры вида game1, game2, game3 в зависимости от
+  // количества картинок на текущем уровне. Используется GameView для выбора
+  // подходящего шаблона
+  get gameType() {
+    return `game${this.step._type}`;
+  }
+
   decreaseLives() {
     return --this.state.lives;
   }
 
   restartTimer() {
-    this.state.timer.restart(TIME_FOR_ANSWER);
+    this.state.timer.restart(TIME_FOR_ANSWER.TOTAL);
   }
 
   stopTimer() {
@@ -46,7 +52,7 @@ export default class GameModel {
   }
 
   resetTimer() {
-    this.state.timer.value = 30;
+    this.state.timer.value = TIME_FOR_ANSWER.TOTAL;
   }
 
   changeLevel() {
@@ -56,7 +62,7 @@ export default class GameModel {
 
   // сохраняем ответ в state.answers: отрицательные сразу, для положительных - вычисляем скорость
   saveAnswer(result) {
-    this.state.answers[this.position] = result === `wrong` ? `wrong` : this.getAnswerSpeed();
+    this.state.answers[this.position] = result === ANSWER.WRONG ? ANSWER.WRONG : this.getAnswerSpeed();
   }
 
   // может ли игра продолжаться дальше?
@@ -66,22 +72,15 @@ export default class GameModel {
 
   // Если ответ правильный - вызываем эту функцию, чтобы определить скорость
   getAnswerSpeed() {
-    let answer = `correct`;
-    const answerTime = TIME_FOR_ANSWER - this.state.timer.value;
-    if (answerTime < 10) {
-      answer = `fast`;
+    let answer = ANSWER.CORRECT;
+    const answerTime = TIME_FOR_ANSWER.TOTAL - this.state.timer.value;
+    if (answerTime < TIME_FOR_ANSWER.FAST) {
+      answer = ANSWER.FAST;
     }
-    if (answerTime > 20) {
-      answer = `slow`;
+    if (answerTime > TIME_FOR_ANSWER.SLOW) {
+      answer = ANSWER.SLOW;
     }
     return answer;
-  }
-
-  // возвращает тип игры вида game1, game2, game3 в зависимости от
-  // количества картинок на текущем уровне. Используется GameView для выбора
-  // подходящего шаблона
-  get gameType() {
-    return `game${this.step._type}`;
   }
 
   // функция принимает адрес картинки и ответ пользователя
@@ -115,8 +114,8 @@ export default class GameModel {
   // начальный стейт для новой игры
   static getInitialState() {
     return new GameModel({
-      timer: timer(TIME_FOR_ANSWER),
-      lives: 3,
+      timer: timer(TIME_FOR_ANSWER.TOTAL),
+      lives: INITIAL_LIVES,
       position: 0,
       answers: new Array(10).fill(`unknown`),
       history: []

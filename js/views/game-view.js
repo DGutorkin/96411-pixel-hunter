@@ -3,6 +3,7 @@ import game1 from './gametypes/game-1';
 import game2 from './gametypes/game-2';
 import game3 from './gametypes/game-3';
 import header from '../screens/header';
+import {ANSWER} from '../constants';
 
 const games = {game1, game2, game3};
 
@@ -61,8 +62,6 @@ export default class GameView extends AbstractView {
     return element;
   }
 
-  onAnswer() {}
-
   bind() {
     this.element.insertBefore(this.header.element, this.element.firstChild);
 
@@ -72,7 +71,7 @@ export default class GameView extends AbstractView {
           label.addEventListener(`click`, (evt) => {
             evt.preventDefault();
             const choice = evt.currentTarget.querySelector(`input`).value;
-            const result = choice === this.model.step.answers[0].type ? `correct` : `wrong`;
+            const result = choice === this.model.step.answers[0].type ? ANSWER.CORRECT : ANSWER.WRONG;
             this.onAnswer(result);
           });
         }
@@ -87,7 +86,7 @@ export default class GameView extends AbstractView {
                 let url = btn.closest(`.game__option`).querySelector(`img`).src;
                 return this.model.answerIsCorrect(url, btn.value) ? 1 : 0;
               });
-              const result = results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
+              const result = results.reduce((sum, value) => sum + value) === 2 ? ANSWER.CORRECT : ANSWER.WRONG;
               this.onAnswer(result);
             }
           });
@@ -99,7 +98,7 @@ export default class GameView extends AbstractView {
             evt.preventDefault();
             const subtype = this.element.querySelector(`.game__task`).dataset.subtype;
             const url = evt.target.querySelector(`img`).src;
-            const result = this.model.answerIsCorrect(url, subtype) ? `correct` : `wrong`;
+            const result = this.model.answerIsCorrect(url, subtype) ? ANSWER.CORRECT : ANSWER.WRONG;
             this.onAnswer(result);
           });
         }
@@ -108,4 +107,6 @@ export default class GameView extends AbstractView {
     // биндим листенеры в зависимости от типа игры и в контексте объекта GameView
     this._listeners[this.model.gameType].call(this);
   }
+
+  onAnswer() {}
 }

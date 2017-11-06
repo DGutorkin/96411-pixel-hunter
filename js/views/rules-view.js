@@ -23,8 +23,6 @@ export default class RulesView extends AbstractView {
     </div>`.trim();
   }
 
-  onStart() {}
-
   bind() {
     this.element.insertBefore(header().element, this.element.firstChild);
     const rulesInput = this.element.querySelector(`.rules__input`);
@@ -40,4 +38,5 @@ export default class RulesView extends AbstractView {
     });
   }
 
+  onStart() {}
 }

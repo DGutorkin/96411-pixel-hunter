@@ -34,15 +34,6 @@ export default class Application {
     }
   }
 
-  onHashChange() {
-    const screen = location.hash.replace(`#`, ``).split(`=`)[0];
-    if (screen === ``) {
-      this.routeTo();
-    } else {
-      this.routeTo(screen);
-    }
-  }
-
   showIntro() {
     introScreen.init();
   }
@@ -58,6 +49,15 @@ export default class Application {
   startGame(username) {
     const gameScreen = new GameScreen(this._data, username);
     gameScreen.init();
+  }
+
+  onHashChange() {
+    const screen = location.hash.replace(`#`, ``).split(`=`)[0];
+    if (screen === ``) {
+      this.routeTo();
+    } else {
+      this.routeTo(screen);
+    }
   }
 
   static showStats(history = `unknown`) {

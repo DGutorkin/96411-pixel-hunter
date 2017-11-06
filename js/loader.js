@@ -1,5 +1,5 @@
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
-const DEFAULT_NAME = `MDn`;
+const DEFAULT_NAME = `default`;
 
 export default class Loader {
   static loadData() {

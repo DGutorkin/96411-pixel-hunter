@@ -1,5 +1,8 @@
 import GameView from './views/game-view';
 import GameModel from './model';
+import {ANSWER} from './constants';
+
+const HASH_FOR_GREETING = `greeting`;
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
@@ -26,6 +29,7 @@ class GameScreen {
 
   prepareStats() {
     this.view.header.updateTimer(``);
+    this.view.header.drawLives();
     this.model.getServerData();
   }
 
@@ -34,25 +38,12 @@ class GameScreen {
     this.model = GameModel.getInitialState();
   }
 
-  onAnswer(result) {
-    this.model.stopTimer();
-    if (result === `wrong`) {
-      this.view.header.drawLives(this.model.decreaseLives());
-    }
-    this.model.saveAnswer(result);
-    if (this.model.isGameOver()) {
-      this.prepareStats();
-    } else {
-      this.changeLevel();
-    }
-  }
-
   bind() {
     this.view.onAnswer = this.onAnswer;
     // вешаем обработчики на таймер:
     // таймер кончился = ответ wrong
     this.model.state.timer.onEnd = () => {
-      this.onAnswer(`wrong`);
+      this.onAnswer(ANSWER.WRONG);
     };
     // таймер тикнул - проапдейтили хедер
     this.model.state.timer.onTick = (time) => {
@@ -65,9 +56,24 @@ class GameScreen {
       if (confirm(`Вся игра будет потеряна`)) {
         this.view.header.drawLives();
         this.stopGame();
-        location.hash = `greeting`;
+        // Если сюда воткнуть метод из Application, то нужно будет его предварительно
+        // импортировать. Не для того ставили обработчик на onHashChange! :)
+        location.hash = HASH_FOR_GREETING;
       }
     };
+  }
+
+  onAnswer(result) {
+    this.model.stopTimer();
+    if (result === ANSWER.WRONG) {
+      this.view.header.drawLives(this.model.decreaseLives());
+    }
+    this.model.saveAnswer(result);
+    if (this.model.isGameOver()) {
+      this.prepareStats();
+    } else {
+      this.changeLevel();
+    }
   }
 }
 
