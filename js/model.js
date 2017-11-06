@@ -7,8 +7,6 @@ const TIME_FOR_ANSWER = 30;
 export default class GameModel {
   constructor(state) {
     this.state = state;
-
-    this.resetState = this.resetState.bind(this);
   }
 
   get position() {
@@ -51,7 +49,7 @@ export default class GameModel {
     this.state.timer.value = 30;
   }
 
-  nextLevel() {
+  changeLevel() {
     this.state.position++;
     this.restartTimer();
   }
@@ -91,14 +89,6 @@ export default class GameModel {
   answerIsCorrect(url, userAnswer) {
     let choice = this.step.answers.filter((answer) => answer.image.url === url)[0];
     return userAnswer === choice.type;
-  }
-
-  // сброс стейта путем присвоения начальных значений
-  resetState() {
-    this.resetTimer();
-    this.state.position = 0;
-    this.state.answers = new Array(10).fill(`unknown`);
-    this.state.lives = 3;
   }
 
   processFromServer(data = []) {

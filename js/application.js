@@ -19,7 +19,7 @@ export default class Application {
     this.onHashChange();
   }
 
-  route(screen = `intro`) {
+  routeTo(screen = `intro`) {
     const routes = {
       intro: this.showIntro,
       greeting: this.showGreeting,
@@ -35,11 +35,11 @@ export default class Application {
   }
 
   onHashChange() {
-    let screen = location.hash.replace(`#`, ``).split(`=`)[0];
+    const screen = location.hash.replace(`#`, ``).split(`=`)[0];
     if (screen === ``) {
-      this.route();
+      this.routeTo();
     } else {
-      this.route(screen);
+      this.routeTo(screen);
     }
   }
 
@@ -56,12 +56,12 @@ export default class Application {
   }
 
   startGame(username) {
-    let gameScreen = new GameScreen(this._data, username);
+    const gameScreen = new GameScreen(this._data, username);
     gameScreen.init();
   }
 
   static showStats(history = `unknown`) {
-    let resultsScreen = new ResultScreen(history);
+    const resultsScreen = new ResultScreen(history);
     resultsScreen.init();
   }
 

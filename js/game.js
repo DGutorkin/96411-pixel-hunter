@@ -20,19 +20,19 @@ class GameScreen {
     this.model.startTimer();
   }
 
-  nextLevel() {
-    this.model.nextLevel();
+  changeLevel() {
+    this.model.changeLevel();
     this.view.renderLevel();
   }
 
-  gameOver() {
+  prepareStats() {
     this.view.header.updateTimer(``);
     this.model.getServerData();
   }
 
   stopGame() {
     this.model.stopTimer();
-    this.model.resetState();
+    this.model = GameModel.getInitialState();
   }
 
   onAnswer(result) {
@@ -42,9 +42,9 @@ class GameScreen {
     }
     this.model.saveAnswer(result);
     if (this.model.isGameOver()) {
-      this.gameOver();
+      this.prepareStats();
     } else {
-      this.nextLevel();
+      this.changeLevel();
     }
   }
 
