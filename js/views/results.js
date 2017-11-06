@@ -26,11 +26,11 @@ export default class ResultsView extends AbstractView {
       <div class="result">
         <h1>${ this.isWin(this._history[0]) ? `Победа!` : `Поражение!`}</h1>
         ${this._history.map((game, i) => {
-    let victory = this.isWin(game);
-    let correct = game.answers.filter((answer) => answer === `correct`).length;
-    let slow = game.answers.filter((answer) => answer === `slow`).length;
-    let fast = game.answers.filter((answer) => answer === `fast`).length;
-    let total = correct * 100 + slow * 50 + fast * 150;
+    const victory = this.isWin(game);
+    const correct = game.answers.filter((answer) => answer === `correct`).length;
+    const slow = game.answers.filter((answer) => answer === `slow`).length;
+    const fast = game.answers.filter((answer) => answer === `fast`).length;
+    const total = correct * 100 + slow * 50 + fast * 150;
     return `
             <table class="result__table">
               <tr>
@@ -88,7 +88,7 @@ export default class ResultsView extends AbstractView {
 
   bind() {
 
-    let headerScreen = header();
+    const headerScreen = header();
     headerScreen.onBack = () => {
       location.hash = `greeting`;
     };

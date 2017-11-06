@@ -55,7 +55,7 @@ export default class HeaderView extends AbstractView {
   }
 
   getHeartElement(type = `full`) {
-    let img = document.createElement(`img`);
+    const img = document.createElement(`img`);
     img.classList.add(`game__heart`);
     img.alt = `Life`;
     img.width = 32;

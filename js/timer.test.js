@@ -9,17 +9,17 @@ describe(`Timer`, () => {
     assert.equal(getTimer(10).tick(), 9);
   });
   it(`One tick decrease timer value by 1 and it's still unfinished`, () => {
-    let timer = getTimer(10);
+    const timer = getTimer(10);
     timer.tick();
     assert(!timer.isFinished());
   });
   it(`timer.value can not be negative`, () => {
-    let timer = getTimer(1);
+    const timer = getTimer(1);
     timer.tick();
     assert.equal(timer.tick(), 0);
   });
   it(`1-second timer becomes finished after 1 tick`, () => {
-    let timer = getTimer(1);
+    const timer = getTimer(1);
     timer.tick();
     assert(timer.isFinished());
   });

@@ -56,7 +56,7 @@ export default class GameView extends AbstractView {
   }
 
   getStatElement(answer) {
-    let element = document.createElement(`li`);
+    const element = document.createElement(`li`);
     element.classList.add(`stats__result`, `stats__result--${answer}`);
     return element;
   }
@@ -71,8 +71,8 @@ export default class GameView extends AbstractView {
         for (let label of this.element.querySelectorAll(`.game__answer`)) {
           label.addEventListener(`click`, (evt) => {
             evt.preventDefault();
-            let choice = evt.currentTarget.querySelector(`input`).value;
-            let result = choice === this.model.step.answers[0].type ? `correct` : `wrong`;
+            const choice = evt.currentTarget.querySelector(`input`).value;
+            const result = choice === this.model.step.answers[0].type ? `correct` : `wrong`;
             this.onAnswer(result);
           });
         }
@@ -81,13 +81,13 @@ export default class GameView extends AbstractView {
         const radioButtons = this.element.querySelectorAll(`input[type=radio]`);
         for (let radio of radioButtons) {
           radio.addEventListener(`change`, () => {
-            let checkedBtns = [...this.element.querySelectorAll(`input[type=radio]:checked`)];
+            const checkedBtns = [...this.element.querySelectorAll(`input[type=radio]:checked`)];
             if (checkedBtns.length === 2) {
-              let results = checkedBtns.map((btn) => {
+              const results = checkedBtns.map((btn) => {
                 let url = btn.closest(`.game__option`).querySelector(`img`).src;
                 return this.model.answerIsCorrect(url, btn.value) ? 1 : 0;
               });
-              let result = results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
+              const result = results.reduce((sum, value) => sum + value) === 2 ? `correct` : `wrong`;
               this.onAnswer(result);
             }
           });
@@ -97,9 +97,9 @@ export default class GameView extends AbstractView {
         for (let option of this.element.querySelectorAll(`.game__option`)) {
           option.addEventListener(`click`, (evt) => {
             evt.preventDefault();
-            let subtype = this.element.querySelector(`.game__task`).dataset.subtype;
-            let url = evt.target.querySelector(`img`).src;
-            let result = this.model.answerIsCorrect(url, subtype) ? `correct` : `wrong`;
+            const subtype = this.element.querySelector(`.game__task`).dataset.subtype;
+            const url = evt.target.querySelector(`img`).src;
+            const result = this.model.answerIsCorrect(url, subtype) ? `correct` : `wrong`;
             this.onAnswer(result);
           });
         }

@@ -67,7 +67,7 @@ export default class GameModel {
   // Если ответ правильный - вызываем эту функцию, чтобы определить скорость
   getAnswerSpeed() {
     let answer = `correct`;
-    let answerTime = TIME_FOR_ANSWER - this.state.timer.value;
+    const answerTime = TIME_FOR_ANSWER - this.state.timer.value;
     if (answerTime < 10) {
       answer = `fast`;
     }
@@ -87,14 +87,14 @@ export default class GameModel {
   // функция принимает адрес картинки и ответ пользователя
   // ищет тип изображения в текущем шаге по URL и сравнивает с ответом
   answerIsCorrect(url, userAnswer) {
-    let choice = this.step.answers.filter((answer) => answer.image.url === url)[0];
+    const choice = this.step.answers.filter((answer) => answer.image.url === url)[0];
     return userAnswer === choice.type;
   }
 
   processFromServer(data = []) {
-    let date = new Date();
+    const date = new Date();
     this.state.history = data;
-    let thisResults = {
+    const thisResults = {
       answers: this.state.answers.slice(),
       lives: this.lives,
       date: date.getTime()
@@ -106,7 +106,7 @@ export default class GameModel {
   }
 
   getServerData() {
-    let user = this.user;
+    const user = this.user;
     Loader.loadResults(user).then((res) => {
       this.processFromServer(res);
     }).catch(() => this.processFromServer());

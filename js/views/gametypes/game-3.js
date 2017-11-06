@@ -1,5 +1,5 @@
 export default (step) => {
-  let subtype = step.question === `Найдите рисунок среди изображений` ? `paint` : `photo`;
+  const subtype = step.question === `Найдите рисунок среди изображений` ? `paint` : `photo`;
   return `
     <p class="game__task" data-subtype="${subtype}">${step.question}</p>
     <form class="game__content  game__content--triple">
