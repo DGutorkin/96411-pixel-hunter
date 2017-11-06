@@ -1,6 +1,5 @@
-import GameView from './views/game';
+import GameView from './views/game-view';
 import GameModel from './model';
-
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры

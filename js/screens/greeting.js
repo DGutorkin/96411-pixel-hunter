@@ -1,4 +1,4 @@
-import GreetingView from '../views/greeting';
+import GreetingView from '../views/greeting-view';
 
 class GreetingScreen {
   constructor() {

@@ -1,4 +1,4 @@
-import RulesView from '../views/rules';
+import RulesView from '../views/rules-view';
 
 class RulesScreen {
   constructor() {

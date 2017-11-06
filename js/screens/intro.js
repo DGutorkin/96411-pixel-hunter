@@ -1,4 +1,4 @@
-import IntroView from '../views/intro';
+import IntroView from '../views/intro-view';
 
 class IntroScreen {
   constructor() {

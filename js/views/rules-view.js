@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import AbstractView from './abstract-view';
 import header from '../screens/header';
 
 export default class RulesView extends AbstractView {

@@ -1,4 +1,4 @@
-import AbstractView from './abstract';
+import AbstractView from './abstract-view';
 import game1 from './gametypes/game-1';
 import game2 from './gametypes/game-2';
 import game3 from './gametypes/game-3';
