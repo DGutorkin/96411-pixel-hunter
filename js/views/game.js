@@ -68,18 +68,18 @@ export default class GameView extends AbstractView {
 
     this._listeners = {
       game1() {
-        [...this.element.querySelectorAll(`.game__answer`)].forEach((label) => {
+        for (let label of this.element.querySelectorAll(`.game__answer`)) {
           label.addEventListener(`click`, (evt) => {
             evt.preventDefault();
             let choice = evt.currentTarget.querySelector(`input`).value;
             let result = choice === this.model.step.answers[0].type ? `correct` : `wrong`;
             this.onAnswer(result);
           });
-        });
+        }
       },
       game2() {
-        const radioButtons = [...this.element.querySelectorAll(`input[type=radio]`)];
-        radioButtons.forEach((radio) => {
+        const radioButtons = this.element.querySelectorAll(`input[type=radio]`);
+        for (let radio of radioButtons) {
           radio.addEventListener(`change`, () => {
             let checkedBtns = [...this.element.querySelectorAll(`input[type=radio]:checked`)];
             if (checkedBtns.length === 2) {
@@ -91,10 +91,10 @@ export default class GameView extends AbstractView {
               this.onAnswer(result);
             }
           });
-        });
+        }
       },
       game3() {
-        [...this.element.querySelectorAll(`.game__option`)].forEach((option) => {
+        for (let option of this.element.querySelectorAll(`.game__option`)) {
           option.addEventListener(`click`, (evt) => {
             evt.preventDefault();
             let subtype = this.element.querySelector(`.game__task`).dataset.subtype;
@@ -102,7 +102,7 @@ export default class GameView extends AbstractView {
             let result = this.model.answerIsCorrect(url, subtype) ? `correct` : `wrong`;
             this.onAnswer(result);
           });
-        });
+        }
       }
     };
     // биндим листенеры в зависимости от типа игры и в контексте объекта GameView
