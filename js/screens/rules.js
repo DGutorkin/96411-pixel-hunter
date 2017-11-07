@@ -1,4 +1,5 @@
 import RulesView from '../views/rules-view';
+import {SCREEN_ROUTE} from '../constants';
 
 class RulesScreen {
   constructor() {
@@ -10,7 +11,7 @@ class RulesScreen {
 
     this.view.onStart = (name) => {
       delete this.view._element;
-      history.pushState(null, null, `#game`);
+      history.pushState(null, null, `#${SCREEN_ROUTE.GAME}`);
       app.startGame(name);
     };
   }

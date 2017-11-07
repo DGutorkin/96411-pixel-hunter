@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view';
+import {BLINKING_TIME, SCREEN_ROUTE} from '../constants';
 
-const BLINKING_TIME = 5;
 
 export default class HeaderView extends AbstractView {
   get template() {
@@ -72,6 +72,6 @@ export default class HeaderView extends AbstractView {
   }
 
   onBack() {
-    location.hash = `greeting`;
+    location.hash = SCREEN_ROUTE.GREETING;
   }
 }

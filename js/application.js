@@ -5,6 +5,7 @@ import GameScreen from './game';
 import ResultScreen from './screens/results';
 import Loader from './loader';
 import adapt from './data/adapter';
+import {SCREEN_ROUTE} from './constants';
 
 export default class Application {
   constructor() {
@@ -19,13 +20,13 @@ export default class Application {
     this.onHashChange();
   }
 
-  routeTo(screen = `intro`) {
+  routeTo(screen = SCREEN_ROUTE.INTRO) {
     const routes = {
-      intro: this.showIntro,
-      greeting: this.showGreeting,
-      rules: this.showRules,
-      game: this.startGame,
-      stats: Application.showStats
+      [SCREEN_ROUTE.INTRO]: this.showIntro,
+      [SCREEN_ROUTE.GREETING]: this.showGreeting,
+      [SCREEN_ROUTE.RULES]: this.showRules,
+      [SCREEN_ROUTE.GAME]: this.startGame,
+      [SCREEN_ROUTE.STATS]: Application.showStats
     };
     if (typeof routes[screen] === `function`) {
       routes[screen]();
@@ -60,7 +61,7 @@ export default class Application {
     }
   }
 
-  static showStats(history = `unknown`) {
+  static showStats(history) {
     const resultsScreen = new ResultScreen(history);
     resultsScreen.init();
   }

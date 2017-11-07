@@ -1,8 +1,6 @@
 import GameView from './views/game-view';
 import GameModel from './model';
-import {ANSWER} from './constants';
-
-const HASH_FOR_GREETING = `greeting`;
+import {ANSWER, SCREEN_ROUTE} from './constants';
 
 class GameScreen {
   // предполагаем, что в конструктор передается набор изображений для игры
@@ -58,7 +56,7 @@ class GameScreen {
         this.stopGame();
         // Если сюда воткнуть метод из Application, то нужно будет его предварительно
         // импортировать. Не для того ставили обработчик на onHashChange! :)
-        location.hash = HASH_FOR_GREETING;
+        location.hash = SCREEN_ROUTE.GREETING;
       }
     };
   }

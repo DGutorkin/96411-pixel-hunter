@@ -1,11 +1,9 @@
 import AbstractView from './abstract-view';
 import header from '../screens/header';
-import {ANSWER, SCORE} from '../constants';
-
-const HASH_FOR_GREETING = `greeting`;
+import {ANSWER, SCORE, SCREEN_ROUTE} from '../constants';
 
 export default class ResultsView extends AbstractView {
-  constructor(history) {
+  constructor(history = `unknown`) {
     super();
     if (Array.isArray(history)) {
       this._history = history.reverse();
@@ -93,7 +91,7 @@ export default class ResultsView extends AbstractView {
 
     const headerScreen = header();
     headerScreen.onBack = () => {
-      location.hash = HASH_FOR_GREETING;
+      location.hash = SCREEN_ROUTE.GREETING;
     };
     this.element.insertBefore(headerScreen.element, this.element.firstChild);
   }

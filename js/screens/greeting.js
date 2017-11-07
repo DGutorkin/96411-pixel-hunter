@@ -1,4 +1,5 @@
 import GreetingView from '../views/greeting-view';
+import {SCREEN_ROUTE} from '../constants';
 
 class GreetingScreen {
   constructor() {
@@ -9,7 +10,7 @@ class GreetingScreen {
     GreetingView.showScreen(this.view);
 
     this.view.onStart = () => {
-      location.hash = `rules`;
+      location.hash = SCREEN_ROUTE.RULES;
     };
   }
 }
